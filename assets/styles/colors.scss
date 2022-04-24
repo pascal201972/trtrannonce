@@ -1,0 +1,192 @@
+$colorbleuciel:#33cccc;
+$colorGris:#555;
+$colorGrisClaire:#999;
+
+/* Color Theme Swatches in Hex */
+$ColorVertFonce: #012E40;
+
+$ColorVertEmpire: #025159;
+$ColorVertCanard: #038C8C;
+$ColorVertPoireau: #03A696;
+$ColorVertMenthe:#408e4e;
+$ColorVertPelouse:#72981e;
+$ColorVertFlash:#52a32f;
+$ColorOrange:#F28705;
+$ColorAdmin:#146551;
+
+/* Color Theme Swatches in RGBA */
+
+@function ColorVertFonceRgba($coef) {
+    @return rgba(1, 46, 63, $coef);
+}
+
+@function ColorAdminRgba($coef) {
+    @return rgba(20, 101, 81, $coef);
+}
+
+@function ColorVertEmpireRgba($coef) {
+    @return rgba(1, 80, 89, $coef);
+}
+
+@function ColorVertCanardRgba($coef) {
+    @return rgba(2, 140, 140, $coef);
+}
+
+@function ColorVertPoireauRgba($coef) {
+    @return rgba(3, 165, 149, $coef);
+}
+
+@function ColorOrangeRgba($coef) {
+    @return rgba(242, 135, 4, $coef);
+}
+
+@function ColorVertMentheRgba($coef) {
+    @return rgba(91, 140, 70, $coef);
+}
+
+@function ColorVertPelouseRgba($coef) {
+    @return rgba(132, 175, 37, $coef);
+}
+
+@function ColorVertFlashRgba($coef) {
+    @return rgba(82, 163, 47, $coef);
+}
+
+$bgMenu:$ColorVertEmpire;
+$colorMenu:$colorGrisClaire;
+
+.color-alert {
+    color: $ColorOrange;
+}
+
+.bg-alert {
+    background-color: ColorOrangeRgba(0.3);
+}
+
+.color-link {
+    color: $ColorVertEmpire;
+
+    &:hover {
+        color: $colorGrisClaire;
+    }
+}
+
+$colorAdmin: candidat $ColorVertPoireau ColorVertPoireauRgba(0.3) ColorVertPoireauRgba(0.7),
+recruteur $ColorVertMenthe ColorVertMentheRgba(0.3) ColorVertMentheRgba(0.7),
+consultant $ColorVertCanard ColorVertCanardRgba(0.3) ColorVertCanardRgba(0.7),
+admin $ColorAdmin ColorAdminRgba(0.3) ColorAdminRgba(0.7),
+annonce $ColorVertFlash ColorVertFlashRgba(0.3) ColorVertFlashRgba(0.7);
+
+
+@each $nom,
+$color,
+$rgba,
+$rgba7 in $colorAdmin {
+    .color-#{$nom} {
+        color: $color;
+    }
+
+    .btn-#{$nom} {
+        background-color: $color;
+        color: $ColorVertEmpire;
+
+        &:hover {
+            background-color: $rgba7;
+        }
+    }
+
+    article.emploi.#{$nom} {
+        border: 1px solid $color;
+        padding: 15px;
+    }
+
+    .administration .#{$nom} h1 {
+        background-color: $color;
+    }
+
+    .administration .#{$nom} h2 {
+        &.slide {
+            border-left: 5px solid $color;
+            border-bottom: 1px solid $color;
+        }
+
+        &.bg {
+            background-color: $color;
+        }
+
+    }
+
+    .administration .#{$nom} {
+        &.liste {
+            border: 1px solid $color;
+            padding: 0;
+        }
+
+
+    }
+
+    .administration article.annonce {
+        border: 1px solid $color;
+    }
+
+    .administration .#{$nom} .bg-succes {
+        background-color: $rgba;
+    }
+
+    .administration .#{$nom} svg {
+        color: $color;
+    }
+
+    .administration .#{$nom}.liste {
+        .thead .bg-color {
+            background-color: $color;
+        }
+
+        div.tbody {
+            ul.paire {
+                background-color: $rgba7;
+            }
+
+            ul.impaire {
+                background-color: $rgba;
+            }
+
+            article.paire {
+                background-color: $rgba7;
+            }
+
+            article.impaire {
+                background-color: $rgba;
+            }
+        }
+    }
+
+    .administration .#{$nom}.content {
+        border-top: 15px solid $color;
+        border-left: 1px solid $color;
+        border-right: 1px solid $color;
+
+    }
+
+
+    .administration .nav-item.#{$nom} .nav-link {
+        background-color: $rgba;
+
+        &.active {
+            background-color: $color;
+        }
+    }
+
+    .administration .liste .nav-item.#{$nom} .nav-link {
+        background-color: $rgba;
+
+        &.active {
+            background-color: $rgba7;
+        }
+    }
+
+    .administration .card.fiche.#{$nom} .card-body {
+        background-color: $rgba;
+    }
+
+}

@@ -1,0 +1,21 @@
+
+
+.logo {
+    span {
+        font-size: 25px;
+        font-family: 'Lalezar', cursive;
+
+    }
+
+    .t {
+        color: $ColorVertCanard;
+        font-weight: 600;
+    }
+
+    .r {
+        color: $ColorOrange;
+        font-weight: 600;
+        position: relative;
+        top: 5px;
+    }
+}

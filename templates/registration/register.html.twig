@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block title %}Inscription TRT{% endblock %}
+
+{% block wrapper %}
+<div class=" form inscription {{type}}">
+
+    <div>
+        <h1 class="form-header bgMenu">Inscription {{type}}</h1>
+        {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.email,{'attr': {'class': 'form-control'}}) }}
+        {{ form_row(registrationForm.plainPassword, {
+        label: 'mot de passe'},{'attr': {'class': 'form-control'}}) }}
+
+        <div> <button type="submit" class="btn btn-primary">s'inscrire</button></div>
+
+        {{ form_end(registrationForm) }}
+
+    </div>
+
+
+</div>
+{% endblock %}

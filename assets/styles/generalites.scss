@@ -1,0 +1,139 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background-color: #eee;
+
+}
+
+.container-fluid {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-family: 'Lalezar', cursive;
+    color: $ColorVertFonce;
+}
+
+p,
+h2 {
+    color: $ColorVertEmpire;
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+}
+
+.bgMenu {
+    background-color: $bgMenu;
+}
+
+a {
+    color: $colorGrisClaire;
+}
+
+.navbar-dark .navbar-brand,
+.navbar-dark .navbar-brand:focus,
+.navbar-dark .navbar-brand:hover,
+.navbar-dark .navbar-nav .nav-link {
+    color: $colorGrisClaire;
+}
+
+.btn-check:focus+.btn-primary,
+.btn-primary:focus,
+.btn-primary,
+.btn-primary:active {
+    background-color: $ColorOrange;
+    border: 1px solid $ColorOrange;
+
+    &:hover {
+        background-color: ColorOrangeRgba(0.7);
+        border: 1px solid $ColorOrange;
+    }
+}
+
+.bg-secondary,
+.dropdown-menu {
+
+    a {
+        color: $ColorOrange;
+
+        &:hover {
+            background-color: $ColorVertEmpire;
+        }
+    }
+}
+
+.align-right {
+    display: flex;
+    justify-content: right;
+    margin-right: 10px;
+}
+
+.ft-18 {
+    font-size: 18px !important;
+}
+
+.ft-16 {
+    font-size: 16px !important;
+}
+
+.ft-20 {
+    font-size: 20px !important;
+}
+
+.ft-22 {
+    font-size: 22px !important;
+}
+
+.ft-24 {
+    font-size: 24px !important;
+}
+
+.ft-26 {
+    font-size: 26px !important;
+}
+
+.ft-28 {
+    font-size: 28px !important;
+}
+
+.ft-30 {
+    font-size: 30px !important;
+}
+
+.ft-34 {
+    font-size: 34px !important;
+}
+
+.ft-38 {
+    font-size: 38px !important;
+}
+
+.ft-40 {
+    font-size: 40px !important;
+}
+
+.alert-success {
+    background-color: $ColorVertPoireau;
+    color: $ColorOrange;
+}
+
+footer {
+    min-height: 300px;
+    background-color: #eee;
+}
+
+.alignement-flex {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bouton {
+    display: flex;
+    justify-content: right;
+}
+
+article {
+    margin-bottom: 10px;
+}

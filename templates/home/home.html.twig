@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil TRT{% endblock %}
+
+{% block wrapper %}
+
+
+<div class="container-fluid">
+
+    <div class="jumbotron">
+        <div class="slide">
+            <div>
+                <img class="mobile" src="{{ asset('build/images/mobile.jpg')}}" alt="recrutement en restauration">
+                <img class="s-mobile" src="{{ asset('build/images/restaurant-2.jpg')}}"
+                    alt="recrutement en restauration">
+            </div>
+
+        </div>
+        <div class="container description">
+            <div class="row">
+                <div class="col-12 col-lg-4 ">
+                    <div class="metier">
+                        <h1 class="display-4"><strong>TRT,</strong> recrutement</h1>
+                        <h2>est un spécialiste du recrutement dans la restauration et l'hôtellerie.</h2>
+                    </div>
+
+                </div>
+                <div class="col-12 col-lg-8">
+                    <div class="row">
+                        <div class="col-12 col-xl-4">
+
+
+                        </div>
+                        <div class="col-12 col-xl-8 ">
+
+                            <div class="specialite">
+
+                                <div>
+                                    <h3>Recruteurs</h3>
+                                    <p>TRT, est la solution idéale pour vos besoins de recrutement en hôtellerie et
+                                        restauration. </p>
+                                    {#
+                                    <p class="align-right"><a href="{{path('app_register',{'type':'recruteur'})}}"
+                                            class="btn btn-primary ">Inscription</a></p>
+                                    #}
+                                </div>
+                                <div>
+                                    <h3>Candidats</h3>
+                                    <p>TRT, vous aide à trouver un emploi dans l'hôtellerie ou la restauration. </p>
+                                    {#
+                                    <p class="align-right"><a href="{{path('app_register',{'type':'candidat'})}}"
+                                            class="btn btn-primary ">Inscription</a></p>
+                                    #}
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

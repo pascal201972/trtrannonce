@@ -1,0 +1,75 @@
+{% form_theme formProfil 'bootstrap_5_layout.html.twig' %}
+{% form_theme formcv 'bootstrap_5_layout.html.twig' %}
+<div class="container candidat">
+    <h3 class="ft-30">Vous êtes: <strong>{{profil.prenom}} {{profil.nom}}</strong></h3>
+    <div class="validation">
+        {% if app.user.valider == 0 %}
+        <p class="color-alert bg-alert p-2">Alert! Votre candidature est en attente de validation par un
+            <strong>consultant.</strong>
+        </p>
+        {% else %}
+        <p class="bg-succes align">Votre Profil a été validé par un consultant, {% include
+            'svg/svg_valider_check.html.twig'%} </p>
+        <p class="bg-succes align">vous avez accès aux offres d'emplois.</p>
+        {% endif %}
+
+        {% if complet == false %}
+        <p class="color-alert bg-alert p-2">Alert! Vous devez pour cela <strong>compléter votre
+                profil.</strong></p>
+
+        <p>Lorsqu'il sera validé vous aurez accès aux offres d'emplois.</p>
+        {% else %}
+        <p class="bg-succes align">Votre profil est complet. {% include
+            'svg/svg_valider_check.html.twig'%}</p>
+        {% endif %}
+
+        <h2 class="slide p-2"><strong>Votre profil</strong></h2>
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                {% if profil.nom =="" or profil.prenom =="" or profil.profession =="" or profil.experience =="" %}
+                <p class="color-alert bg-alert p-2">Alert! Ajouter vos<strong> nom, prenom , profession et votre
+                        expérience</strong></p>
+
+
+                {% else %}
+                <p class="bg-succes align">Nom, prénom , profession, experience: Ajouter. {% include
+                    'svg/svg_valider_check.html.twig'%}</p>
+                {% endif %}
+                <div class="col-12 col-lg-8">
+                    {{ form_start(formProfil) }}
+                    {{ form_row(formProfil.nom,{'attr': {'class': 'form-control','placeholder':'nom '}}) }}
+                    {{ form_row(formProfil.prenom,{'attr': {'class': 'form-control','placeholder':'prenom '}}) }}
+                    {{ form_row(formProfil.profession,{'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(formProfil.experience,{'attr': {'class': 'form-control'}}) }}
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {{ form_end(formProfil) }}
+                </div>
+
+            </div>
+
+            <diV class="col-12 col-lg-4">
+                {% if profil.cv =="" %}
+                <p class="color-alert bg-alert p-2">Alert! Ajouter votre <strong>cv</strong></p>
+
+
+                {% else %}
+                <p class="bg-succes align">Le cv à été ajouter. {% include
+                    'svg/svg_valider_check.html.twig'%}</p>
+                {% endif %}
+                <p class="ft-24"><strong>{{profil.cv}}.pdf</strong></p>
+                <h3>Ajouter ou modifier votre cv</h3>
+                {{ form_start(formcv) }}
+
+                {{ form_row(formcv.cvpdf,{'attr': {'class': 'form-control','placeholder':'cv '}}) }}
+                {% if profil.cv =="" %}
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+                {% else %}
+                <button type="submit" class="btn btn-primary">Modifier</button>
+                {% endif %}
+                {{ form_end(formcv) }}
+            </diV>
+        </div>
+
+
+    </div>
+</div>

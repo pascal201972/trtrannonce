@@ -1,0 +1,77 @@
+.jumbotron {
+    background-color: ColorVertEmpireRgba(0.2);
+    position: relative;
+
+    .slide {
+
+        position: relative;
+        height: 470px;
+        overflow: hidden;
+        width: 100%;
+
+        img {
+            position: absolute;
+            width: 127%;
+        }
+    }
+
+
+
+    .description {
+        position: absolute;
+        top: 0;
+        margin: 0 auto;
+        padding: 0;
+        width: 80%;
+        left: 10%;
+    }
+
+    .metier {
+        margin: 2%;
+        background-color: rgba(255, 255, 255, 0.5);
+        height: 94%;
+        -webkit-box-shadow: 2px 0px 4px 0px #eee 0.7;
+        box-shadow: 2px 0px 4px 0px #eee 0.7;
+    }
+
+    .metier h1 {
+
+        text-align: center;
+        padding: 5px;
+        font-size: 40px;
+
+    }
+
+    .metier h2 {
+        padding: 5px;
+        font-size: 40px;
+        text-align: center;
+    }
+
+    .specialite {
+        margin: 2%;
+        height: 94%;
+
+        div {
+
+            background-color: ColorVertPoireauRgba(0.9);
+            height: 55%;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            background-color: ColorVertEmpireRgba(0.8);
+            color: $ColorOrange;
+            font-weight: 700;
+            text-align: center;
+
+        }
+
+        p {
+            color: #efefef;
+            font-size: 26px;
+            padding: 3px;
+            font-weight: 600;
+        }
+    }
+}

@@ -1,0 +1,18 @@
+.inscription {
+
+
+    &.recruteur {
+        background-image: url('../images/recruteur.jpg');
+    }
+
+    &.candidat {
+        background-image: url('../images/candidat.jpg');
+    }
+
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position-y: 25%;
+
+
+
+}

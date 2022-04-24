@@ -1,0 +1,55 @@
+<br />
+<div class="container">
+    {% include 'form_user.html.twig' %}
+    <div class="validation">
+        {% if app.user.valider == 0 %}
+        <p class="color-alert bg-alert p-2">Alert! Votre inscription est en attente de validation par un
+            <strong>consultant.</strong>
+        </p>
+        {% else %}
+        <p class="bg-succes align">Votre Profil a été validé par un consultant,vous pouvez ajouter des offres d'emplois.
+            {% include
+            'svg/svg_valider_check.html.twig'%} </p>
+
+        {% endif %}
+
+        {% if complet == false %}
+        <p class="color-alert bg-alert p-2">Alert! Vous devez pour cela <strong>compléter votre
+                profil.</strong></p>
+
+        <p>Lorsqu'il sera validé vous pourrez ajouter des offres d'emplois".</p>
+        {% else %}
+        <p class="bg-succes align">Votre profil est complet. {% include
+            'svg/svg_valider_check.html.twig'%}</p>
+        {% endif %}
+
+        {% if complet == false %}
+        <p class="color-alert bg-alert p-2">Alert! Ajouter vos <strong> Nom, etablissement , adresse, code postale et
+                ville</strong></p>
+
+
+        {% else %}
+        <p class="bg-succes align">Nom, etablissement , adresse, code postale,ville: Ajouter. {% include
+            'svg/svg_valider_check.html.twig'%}</p>
+        {% endif %}
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                {{ form_start(formProfilRecruteur) }}
+                {{ form_row(formProfilRecruteur.nom,{'attr': {'class': 'form-control','placeholder':'nom '}}) }}
+                {{ form_row(formProfilRecruteur.etablissement,{'attr': {'class':
+                'form-control','placeholder':'Etablissement '}}) }}
+                {{ form_row(formProfilRecruteur.adresse,{'attr': {'class': 'form-control','placeholder':'Adresse
+                '}}) }}
+            </div>
+            <div class="col-12 col-lg-6">
+                {{ form_row(formProfilRecruteur.codePostal,{'attr': {'class': 'form-control','placeholder':'code postal
+                '}}) }}
+                {{ form_row(formProfilRecruteur.ville,{'attr': {'class': 'form-control','placeholder':'Ville '}}) }}
+                <br />
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                {{ form_end(formProfilRecruteur) }}
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,79 @@
+@media (min-width: 992px) {
+    .mobile {
+        display: none;
+    }
+
+    .s-mobile {
+        display: block;
+    }
+}
+
+@media (max-width: 992px) {
+    .inscription {
+        width: 100%;
+        background-position-y: 0;
+    }
+
+    .connect {
+        background-position-y: 0;
+    }
+
+
+    .jumbotron .slide {
+        height: 700px;
+    }
+
+    .mobile {
+        display: block;
+    }
+
+    .s-mobile {
+        display: none;
+    }
+
+    .jumbotron .metier {
+        h2 {
+            font-size: 30px;
+        }
+    }
+
+    .jumbotron .specialite {
+        display: flex;
+        justify-content: space-around;
+
+        div {
+            position: relative;
+            margin: 10px;
+            height: 270px;
+            width: 50%;
+
+        }
+    }
+
+    .align-right {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+
+}
+
+@media (max-width: 576px) {
+    .jumbotron .specialite {
+        flex-direction: column;
+
+        p {
+            font-weight: 200;
+        }
+
+        div {
+            height: 225px;
+            margin: 0;
+            margin-bottom: 10px;
+            position: relative;
+            width: 100%;
+        }
+    }
+
+
+}

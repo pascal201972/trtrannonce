@@ -1,0 +1,22 @@
+{{ form_start(formannonce) }}
+<div class="row">
+    <div class="col-lg-6">
+        {{ form_row(formannonce.profession,{'attr': {'class': 'form-control','placeholder':'profession '}}) }}
+        {{ form_row(formannonce.contrat,{'attr': {'class': 'form-control','placeholder':'contrat '}}) }}
+        {{ form_row(formannonce.salaireAnnuel,{'attr': {'class': 'form-control','placeholder':'salaire '}}) }}
+        {{ form_row(formannonce.experience,{'attr': {'class': 'form-control','placeholder':'experience'}}) }}
+    </div>
+    <div class="col-lg-6">
+
+
+        {{ form_row(formannonce.horaire,{'attr': {'class': 'form-control','placeholder':'horaire '}}) }}
+        {{ form_row(formannonce.description,{'attr': {'class': 'form-control','placeholder':'description '}}) }}
+        {{ form_row(formannonce.etat,{'attr': {'class': 'form-control','placeholder':'etat'}}) }}
+    </div>
+
+</div>
+</br>
+<button type="submit" class="btn btn-primary">Enregistrer</button>
+
+{{ form_end(formannonce) }}
+</br>

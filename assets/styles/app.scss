@@ -1,3 +1,9 @@
-body {
-    background-color: lightgray;
-}
+@import "~bootstrap/scss/bootstrap";
+@import "colors.scss";
+@import "font.scss";
+@import "logo.scss";
+@import "generalites.scss";
+@import "accueil.scss";
+@import "form.scss";
+@import "login.scss";
+@import "register.scss";

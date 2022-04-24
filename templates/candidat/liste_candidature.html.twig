@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="annonce ">
+
+
+        {% for emploi in liste %}
+        <article class="annonce">
+            <div class="row">
+                <div class="col-12 col-lg-4">
+                    <h2><strong>{{emploi.Recruteur.Etablissement}} : </strong>{{emploi.Recruteur.Ville}}</h2>
+                </div>
+                <div class="col-12 col-lg-5">
+
+                    <h3 class="color-annonce"><strong>{{emploi.Profession.titre}}:</strong></h3>
+                </div>
+                <div class="col-12 col-lg-3">
+                    <h4>{{emploi.Contrat.titre}}</h4>
+                </div>
+            </div>
+
+            <p class="ft-24">{{emploi.Description}}</p>
+            <p class="bouton"><a href="{{path('app_candidat_annonce_postuler',{'id':emploi.id})}}"
+                    class="btn btn-annonce ft-22">Annuler la candidature</a></p>
+        </article>
+        {% endfor %}
+    </div>
+</div>

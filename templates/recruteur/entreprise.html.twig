@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Entreprise : trt{% endblock %}
+
+
+{% block javascripts %}
+
+{{ encore_entry_script_tags('js/admin') }}
+{% endblock %}
+{% block wrapper %}
+
+
+<div class="container-fluid recruteur ">
+    <h1 class="bg-color">bienvenue dans votre espace recruteur </h1>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item recruteur ">
+            <a class="nav-link {% if onglet == 'profil' %} active {% endif %}" href="{{path('app_recruteur')}}">profil
+                recruteur
+            </a>
+        </li>
+        <li class="nav-item annonce ">
+            <a class="nav-link {% if onglet == 'annonce' %} active {% endif %}"
+                href="{{path('app_recruteur_annonce')}}">Listes des
+                annonces</a>
+        </li>
+    </ul>
+
+    <div class="content  {% if onglet == 'profil' %} recruteur {% else %}  {{onglet}} {% endif %}">
+        {% if onglet == 'profil' %} {% include 'entreprise/profil_recruteur.html.twig'%}{% endif %}
+        {% if onglet == 'annonce' %} {% include 'entreprise/annonce_recruteur.html.twig'%}{% endif %}
+
+
+    </div>
+</div>
+{% endblock %}

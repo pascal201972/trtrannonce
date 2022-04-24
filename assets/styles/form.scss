@@ -1,0 +1,46 @@
+.form.connect,
+.form.inscription {
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+
+    >div {
+        width: 400px;
+        height: 100%;
+        margin: 20px;
+        margin-top: 100px;
+    }
+
+    form {
+        padding: 20px;
+        background-color: ColorVertPoireauRgba(0.7);
+        min-height: 240px;
+        ;
+
+        div {
+            margin: 0 20px;
+            margin-bottom: 20px;
+        }
+    }
+
+
+
+
+    h1 {
+
+        color: $ColorVertPoireau;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 25px;
+
+    }
+
+    .btn {
+        margin-top: 10px;
+    }
+
+    div.alert.alert-danger {
+        width: 100%;
+        margin: 0;
+    }
+}
