@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Form\FormCvType;
+use App\Entity\TrtCandidature;
+use App\Form\FormProfilCandidatType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,6 +14,10 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class CandidatController extends BddController
 {
+    /** 
+     * @Route("/candidat/", name= "app_candidat")
+     * IsGranted('ROLE_CANDIDAT')
+     */
     public function index(SluggerInterface $slugger, Request $request): Response
     {
         $user = $this->getUser();
@@ -70,4 +77,53 @@ class CandidatController extends BddController
         ]);
     }
 
+
+    /** 
+     * @Route("/candidat/annonces/", name= "app_candidat_annonce")
+     * IsGranted('ROLE_CANDIDAT')
+     */
+    public function candidatures(): Response
+    {
+
+        $user = $this->getUser();
+        $profil = $this->reposProfilCdt->findOneByUser($user);
+
+        $liste = $this->reposCandidature->findBy(['profil' => $profil->getId()]);
+        foreach ($liste as $candidat) {
+            $annonce = $this->reposAnnonce->findOneBy(['id' => $candidat->getAnnonce()]);
+            $listeAnnonce[] = $annonce;
+        };
+        return $this->render('candidat/candidat.html.twig', [
+            'page' => 'administration',
+            'onglet' => 'annonce',
+            'liste' => $listeAnnonce
+
+        ]);
+    }
+
+    /** 
+     * @Route("/candidat/annonces/postuler/{id}", name= "app_candidat_annonce_postuler")
+     * IsGranted('ROLE_CANDIDAT')
+     */
+    public function postuler($id = null, Request $request): Response
+    {
+        if ($id != null) {
+            $user = $this->getUser();
+            $profil = $this->reposProfilCdt->findOneByUser($user);
+            if ($user->getValider()) {
+                $annonce = $this->reposAnnonce->findOneBy(['id' => $id]);
+                $candidatures = $this->reposCandidature->findByAnnonceAndProfil($id, $profil->getId());
+                if (!$candidatures) {
+                    $candidat = new TrtCandidature();
+                    $candidat->setAnnonce($id);
+                    $candidat->setProfil($profil->getId());
+                    $this->entityManager->persist($candidat);
+                    $this->entityManager->flush();
+                }
+
+
+                return  $this->redirectToRoute('app_candidat_annonce');
+            } else   return  $this->redirectToRoute('app_candidat');
+        } else   return  $this->redirectToRoute('app_candidat');
+    }
 }

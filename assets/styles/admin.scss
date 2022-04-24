@@ -1,0 +1,161 @@
+.validation p {
+    font-size: 30px;
+}
+
+.administration .row {
+    margin: 0 5px;
+}
+
+h1 {
+    padding: 8px;
+}
+
+.administration article.annonce {
+    padding: 5px;
+    margin: 10px;
+
+
+}
+
+.administration .content {
+    margin: 0 20px;
+}
+
+.boutons {
+    display: inline-block;
+    position: relative;
+    height: 30px;
+    width: 50px;
+    left: 65%;
+    bottom: 10px;
+
+    button {
+        position: absolute;
+        border: none;
+    }
+}
+
+.align {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.hide {
+    display: none;
+}
+
+h2.bg {
+    color: #eee;
+    text-indent: 10px;
+}
+
+// onglet
+.tab-content {
+    margin: 0 20px;
+}
+
+.nav.nav-tabs {
+    margin: 0 20px;
+
+    .nav-link {
+
+        color: ColorVertFonceRgba(0.5);
+        border: none;
+
+        &:hover {
+            color: $ColorVertFonce;
+        }
+
+        &.active {
+            border: none;
+            color: $ColorVertFonce;
+        }
+    }
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {}
+
+.administration {
+    table {
+        width: 100%;
+
+        td {
+            text-align: center;
+        }
+    }
+
+    tr {
+        height: 35px;
+
+        td {
+            padding: 5px;
+
+        }
+    }
+
+}
+
+.administration .voir:hover svg {
+    color: $ColorVertFonce;
+}
+
+.administration .card.fiche {
+    margin: 20px 30px;
+    padding-right: 0;
+
+    p {
+        font-size: 28px;
+    }
+
+
+}
+
+.administration .action {
+    text-align: center;
+
+    ul li {
+        list-style: none;
+
+        .btn {
+            width: 150px;
+            margin: 0 auto;
+        }
+    }
+}
+
+.nav.nav-tabs .nav-link.active {
+    border: inherit;
+}
+
+.administration {
+
+    article.valid,
+    article.novalid {
+        div {
+            margin: 5px 0;
+            font-size: 22px;
+        }
+
+        div .btn.voir {
+
+            border: 1px solid $ColorVertEmpire;
+            border-radius: 10px;
+            width: 85px;
+        }
+
+        div.action {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        div span {
+            display: none;
+        }
+    }
+}
+
+.btn-svg {
+    border: none;
+}

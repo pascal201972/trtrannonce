@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\TrtContrat;
+use App\Entity\TrtCandidature;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method TrtContrat|null find($id, $lockMode = null, $lockVersion = null)
- * @method TrtContrat|null findOneBy(array $criteria, array $orderBy = null)
- * @method TrtContrat[]    findAll()
- * @method TrtContrat[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TrtCandidature|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TrtCandidature|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TrtCandidature[]    findAll()
+ * @method TrtCandidature[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TrtContratRepository extends ServiceEntityRepository
+class TrtCandidatureRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TrtContrat::class);
+        parent::__construct($registry, TrtCandidature::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(TrtContrat $entity, bool $flush = true): void
+    public function add(TrtCandidature $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class TrtContratRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(TrtContrat $entity, bool $flush = true): void
+    public function remove(TrtCandidature $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -46,24 +46,24 @@ class TrtContratRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return TrtContrat[] Returns an array of TrtContrat objects
+    //  * @return TrtCandidature[] Returns an array of TrtCandidature objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByAnnonceAndProfil($idannonce, $idprofil)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('t.annonce= :idann')
+            ->setParameter('idann', $idannonce)
+            ->andWhere('t.profil= :idprofil')
+            ->setParameter('idprofil', $idprofil)
             ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
 
     /*
-    public function findOneBySomeField($value): ?TrtContrat
+    public function findOneBySomeField($value): ?TrtCandidature
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')

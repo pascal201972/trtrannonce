@@ -1,0 +1,24 @@
+<div class="idbox-slide" id="idemailbox">
+    <h4>Modifier votre email</h4>
+    {{ form_start(formemail) }}
+    {{ form_row(formemail.email,{'attr': {'class': 'form-control','placeholder': 'Mon email'}}) }}
+    <br />
+    <div> <button type="submit" class="btn btn-primary">Modifier</button></div>
+    {{ form_end(formemail) }}
+</div>
+<div class="idbox-slide" id="idmdpbox">
+    <h4>Modifier votre mot de passe</h4>
+    {{ form_start(formMdp) }}
+    {{ form_row(formMdp.plainPassword,{'attr': {'class': 'form-control','placeholder': 'Mon mot de passe'}}) }}
+    <br />
+    <div> <button type="submit" class="btn btn-primary">Modifier</button></div>
+    {{ form_end(formMdp) }}
+</div>
+<p class="ft-30 alignement-flex">
+    <strong>Mon email: </strong> {{app.user.email}}
+    <button id="idemail" class="btn-svg modifier">{% include 'svg/svg_modifier.html.twig' %}</button>
+</p>
+<p class="ft-30 alignement-flex">
+    <strong>Mon Mot de passe: </strong> ....................
+    <button id="idmdp" class="btn-svg modifier">{% include 'svg/svg_modifier.html.twig' %}</button>
+</p>

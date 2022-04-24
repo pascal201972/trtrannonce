@@ -37,6 +37,9 @@ security:
     access_control:
          - { path: ^/connect, roles: ROLE_USER }
          - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/consultant, roles: ROLE_CONSULTANT }
+         - { path: ^/candidat, roles: ROLE_CANDIDAT }
+         - { path: ^/recruteur, roles: ROLE_RECRUTEUR }
 
 when@test:
     security:

@@ -9,8 +9,6 @@ use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<TrtAnnonce>
- *
  * @method TrtAnnonce|null find($id, $lockMode = null, $lockVersion = null)
  * @method TrtAnnonce|null findOneBy(array $criteria, array $orderBy = null)
  * @method TrtAnnonce[]    findAll()
@@ -63,6 +61,18 @@ class TrtAnnonceRepository extends ServiceEntityRepository
         ;
     }
     */
+ /*
+    public function findByValider($value)
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('t.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
 
     /*
     public function findOneBySomeField($value): ?TrtAnnonce

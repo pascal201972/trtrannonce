@@ -1,0 +1,113 @@
+.administration .row {
+    margin: 0;
+}
+
+section.table {
+    li {
+        list-style: none;
+
+    }
+}
+
+section.table .thead {
+    display: none;
+}
+
+.nav.nav-tabs .nav-link {
+    font-size: 17px;
+    padding: 10px 2px;
+    font-weight: 600;
+}
+
+.consultant .nav.nav-tabs .nav-item {
+    text-align: center;
+
+    width: 20%;
+
+}
+
+.recruteur .nav.nav-tabs .nav-item {
+    text-align: center;
+    width: 50%;
+}
+
+.admin .nav.nav-tabs .nav-item {
+    text-align: center;
+    width: 50%;
+}
+
+.candidat .nav.nav-tabs .nav-item {
+    text-align: center;
+    width: 33.3333%;
+}
+
+@media (min-width: 1200px) {
+    .nav.nav-tabs .nav-link {
+        font-size: 25px;
+        padding: 10px 10px;
+    }
+
+    .candidat,
+    .recruteur {
+
+        section.table .thead {
+            display: block;
+        }
+
+        section.table ul {
+            display: flex;
+            align-items: center;
+
+            justify-content: space-around;
+
+            li {
+                span {
+                    display: none;
+                }
+
+                padding: 5px 0;
+                overflow-wrap: break-word;
+                text-align: center;
+                border-right: 1px solid #ccc;
+
+            }
+        }
+    }
+
+
+}
+
+@media (min-width: 1400px) {
+
+    .annonce .nav.nav-tabs .nav-link {
+        font-size: 25px;
+        padding: 10px 10px;
+    }
+
+    .annonce section.table .thead {
+        display: block;
+    }
+
+    .annonce section.table ul {
+        display: flex;
+        align-items: center;
+
+        justify-content: space-around;
+
+        li {
+            span {
+                display: none;
+            }
+
+            padding: 5px 0;
+            overflow-wrap: break-word;
+            text-align: center;
+            border-right: 1px solid #ccc;
+
+        }
+
+    }
+
+
+
+}

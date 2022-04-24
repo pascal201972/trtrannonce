@@ -9,8 +9,6 @@ use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<TrtProfilrecruteur>
- *
  * @method TrtProfilrecruteur|null find($id, $lockMode = null, $lockVersion = null)
  * @method TrtProfilrecruteur|null findOneBy(array $criteria, array $orderBy = null)
  * @method TrtProfilrecruteur[]    findAll()
@@ -50,29 +48,27 @@ class TrtProfilrecruteurRepository extends ServiceEntityRepository
     // /**
     //  * @return TrtProfilrecruteur[] Returns an array of TrtProfilrecruteur objects
     //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?TrtProfilrecruteur
+    public function findProfilByUser($user)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+            ->from('App\Entity\TrtUser', 'u')
+            ->select('u', 't')
+            ->Where('t.idUser = u.id')
+            ->andWhere('t.idUser = :val')
+            ->setParameter('val', $user)
+            ->orderBy('t.id', 'ASC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
+
+    public function findOneByUser($user): ?TrtProfilRecruteur
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.idUser = :val')
+            ->setParameter('val', $user)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
