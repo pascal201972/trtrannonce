@@ -1,0 +1,35 @@
+<div class="container  admin">
+    {{ form_start(formconsultant) }}
+    {{ form_row(formconsultant.email,{'attr': {'class': 'form-control'}}) }}
+    {{ form_row(formconsultant.plainPassword, {
+    label: 'mot de passe'},{'attr': {'class': 'form-control'}}) }}
+
+    <div> <button type="submit" class="btn btn-primary">Ajouter</button></div>
+
+    {{ form_end(formconsultant) }}
+    <br />
+</div>
+
+
+<div class="container liste admin">
+
+    <section class="table">
+        <div class="thead">
+            <ul class="bg-color row">
+                <li><strong>Email</strong></li>
+                <li><strong>Modifier</strong></li>
+                <li><strong>Supprimer</strong></li>
+            </ul>
+        </div>
+        <div class="tbody">
+            {% for consultant in liste %}
+            <ul class="{% if  loop.index % 2 == 0  %} paire {% else %} impaire {% endif %}">
+                <li>{{consultant.Email}}</li>
+                <li></li>
+                <li></li>
+            </ul>
+            {% endfor %}
+        </div>
+    </section>
+
+</div>

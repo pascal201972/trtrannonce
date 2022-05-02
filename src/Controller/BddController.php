@@ -12,6 +12,7 @@ use App\Repository\TrtProfilcandidatRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\TrtProfilrecruteurRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class BddController extends AbstractController
 {
@@ -21,6 +22,7 @@ class BddController extends AbstractController
     public $entityManager;
     public $reposAnnonce;
     public $reposCandidature;
+    public $passwordEncoder;
 
 
 
@@ -32,6 +34,7 @@ class BddController extends AbstractController
         EntityManagerInterface $entityManager_,
         TrtAnnonceRepository $reposAnnonce_,
         TrtCandidatureRepository $repoCandidature_,
+        UserPasswordHasherInterface $passwordEncoder_
     ) {
         $this->reposUser = $reposUser_;
         $this->reposProfilCdt = $reposProfilCdt_;
@@ -39,6 +42,7 @@ class BddController extends AbstractController
         $this->reposAnnonce = $reposAnnonce_;
         $this->entityManager = $entityManager_;
         $this->reposCandidature = $repoCandidature_;
+        $this->passwordEncoder = $passwordEncoder_;
     }
     public function formprofil($route, $user, Request $request,  $formemail, $formMdp)
     {
@@ -81,28 +85,33 @@ class BddController extends AbstractController
     }
 
 
-    public function isProfilComplet($profil, $role)
+    public function isProfilComplet($user)
     {
+        $roles = $user->getRoles();
+        $role = $roles[0];
 
         if ($role == 'ROLE_CANDIDAT') {
-
+            $profil = $user->getTrtProfilcandidat();
             if ($profil->getNom() != "" && $profil->getPrenom() != "" && $profil->getCv() != "" && $profil->getProfession()->getId() != 0 && $profil->getExperience()->getId() != 0)
-                return true;
-            else return false;
+                $bool = true;
+            else $bool = false;
         }
         if ($role == 'ROLE_RECRUTEUR') {
-
-            if ($profil->getNom() != "" && $profil->getAdresse() != "" && $profil->getCodePostal() != "" && $profil->getVille() != "" && $profil->getEtablissement() != "") return true;
-            else return false;
+            $profil = $user->getTrtProfilrecruteur();
+            if ($profil->getNom() != "" && $profil->getAdresse() != "" && $profil->getCodePostal() != "" && $profil->getVille() != "" && $profil->getEtablissement() != "") $bool = true;
+            else $bool = false;
         }
+        return $bool;
     }
 
-    public function setProfilComplet($user, $profil, $role)
+    public function setProfilComplet($profil, $user)
     {
-        if ($this->isProfilComplet($profil, $role)) $user->setProfil(true);
+        $profilValider = $this->isProfilComplet($user);
+        if ($profilValider) $user->setProfil(true);
         else $user->setProfil(false);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+        return  $profilValider;
     }
 
     public function isAnnonceComplet($annonce)

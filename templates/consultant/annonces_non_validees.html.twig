@@ -1,0 +1,29 @@
+<h3 id="idnonvalid"><strong>Annonces non validées</strong>
+    <a class="" href="#idvalid"> Annonces validées</a>
+</h3>
+<div class="tbody box-accordeon">
+    {% set index = 0 %}
+    {% for annonce in listenonvalid %}
+
+    {% set index = index + 1 %}
+    <article class=" annonce novalid  {% if  index % 2 == 0  %} paire {% else %} impaire {% endif %} ">
+
+        {% include 'consultant/element_annonce.html.twig'%}
+
+        <div class="row">
+            <div class="col-xxl-6 action"><span><strong>voir: </strong></span><a class="voir btn"
+                    href="{{path('app_consultant_annonce_voir',{'id':annonce.id})}}">{% include
+                    'svg/svg_voir.html.twig' %}
+                </a>
+            </div>
+
+            {% if annonce.complet == true %}
+            <div class="col-xxl-6 action"><a href="{{path('app_consultant_annonce_validation',{'id':annonce.id})}}"
+                    class="btn btn-primary">Valider</a>
+            </div>
+            {% else %}
+            <div class="col-xxl-6 action"><strong>Annonce incomplète</strong></div>
+            {% endif %}
+    </article>
+    {% endfor %}
+</div>

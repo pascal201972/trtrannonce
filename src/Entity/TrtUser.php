@@ -38,6 +38,9 @@ class TrtUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'idUser', targetEntity: TrtProfilcandidat::class, cascade: ['persist', 'remove'])]
     private $trtProfilcandidat;
 
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: TrtInitpassword::class, cascade: ['persist', 'remove'])]
+    private $initPassword;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -191,6 +194,28 @@ class TrtUser implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->trtProfilcandidat = $trtProfilcandidat;
+
+        return $this;
+    }
+
+    public function getInitPassword(): ?TrtInitpassword
+    {
+        return $this->initPassword;
+    }
+
+    public function setInitPassword(?TrtInitpassword $initPassword): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($initPassword === null && $this->initPassword !== null) {
+            $this->initPassword->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($initPassword !== null && $initPassword->getUser() !== $this) {
+            $initPassword->setUser($this);
+        }
+
+        $this->initPassword = $initPassword;
 
         return $this;
     }

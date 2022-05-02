@@ -9,12 +9,9 @@
                 ajouter des annonces!!!
             </strong>
         </p>
-        {% else %}
-        {% if action == 'ajouter' or action == 'modifier' %}
-        {% include 'entreprise/formulaire_annonce.html.twig'%}
-        {% else %}
-
-        {% if action == 'supprimer' %}
+        {% elseif action == 'ajouter' or action == 'modifier' %}
+        {% include 'recruteur/formulaire_annonce.html.twig'%}
+        {% elseif action == 'supprimer' %}
         <p class="color-alert bg-alert ft-34"><strong>Confirmer la suppression!!</strong></p>
         <ul class="color-alert bg-alert ft-30">
             <li><span><strong>Etablissement/Recruteur:
@@ -26,8 +23,6 @@
             class="btn btn-secondary">Suppression</a>
         {% else %}
         <a href="{{path('app_recruteur_annonce_ajouter')}}" class="btn btn-secondary">Ajouter</a>
-        {% endif %}
-        {% endif %}
         {% endif %}
 
     </div>

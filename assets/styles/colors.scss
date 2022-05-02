@@ -118,7 +118,7 @@ $rgba7 in $colorAdmin {
 
     .administration .#{$nom} {
         &.liste {
-            border: 1px solid $color;
+
             padding: 0;
         }
 
@@ -152,10 +152,18 @@ $rgba7 in $colorAdmin {
             }
 
             article.paire {
-                background-color: $rgba7;
+                background-color: #eee;
             }
 
             article.impaire {
+                background-color: #ccc;
+            }
+
+            article.valid.paire {
+                background-color: $rgba7;
+            }
+
+            article.valid.impaire {
                 background-color: $rgba;
             }
         }
@@ -187,6 +195,39 @@ $rgba7 in $colorAdmin {
 
     .administration .card.fiche.#{$nom} .card-body {
         background-color: $rgba;
+    }
+
+    .liste.#{$nom} {
+
+        h3#idnonvalid,
+        h3#idvalid {
+            a {
+                float: right;
+                color: #666;
+                font-size: 15px;
+
+                &:hover {
+                    color: #777;
+                }
+            }
+
+
+        }
+
+        a.cv {
+            color: $color;
+            position: relative;
+
+            strong {
+                position: absolute;
+                right: 8%;
+                top: 85%;
+            }
+
+            &:hover {
+                color: $ColorVertEmpire;
+            }
+        }
     }
 
 }

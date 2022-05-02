@@ -18,8 +18,20 @@
             </div>
 
             <p class="ft-24">{{emploi.Description}}</p>
-            <p class="bouton"><a href="{{path('app_candidat_annonce_postuler',{'id':emploi.id})}}"
-                    class="btn btn-annonce ft-22">Annuler la candidature</a></p>
+
+            {% if valider[emploi.id] is defined %}
+            {% if valider[emploi.id] == true %}
+            <p class="ft-26 color-alert">
+                <strong>
+                    Votre candidature a été valider par un consultant et trransmis au recruteur.
+                </strong>
+            </p>
+            {% endif %}
+            {% endif %}
+            <p class="bouton">
+                <a href="{{path('app_candidat_annonce_annuler_candidature',{'id':emploi.id})}}"
+                    class="btn btn-annonce ft-22">Annuler la candidature</a>
+            </p>
         </article>
         {% endfor %}
     </div>

@@ -19,6 +19,9 @@ class TrtCandidature
     #[ORM\Column(type: 'integer')]
     private $profil;
 
+    #[ORM\Column(type: 'boolean')]
+    private $valider;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class TrtCandidature
     public function setProfil(int $profil): self
     {
         $this->profil = $profil;
+
+        return $this;
+    }
+
+    public function getValider(): ?bool
+    {
+        return $this->valider;
+    }
+
+    public function setValider(bool $valider): self
+    {
+        $this->valider = $valider;
 
         return $this;
     }

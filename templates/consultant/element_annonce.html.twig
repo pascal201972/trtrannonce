@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-xxl-12"><span><strong>Etablissement/Recruteur:</strong></span>
+        <h3 class="">{{annonce.recruteur.etablissement}}/{{annonce.recruteur.nom}}</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xxl-3"><span><strong>Profession:</strong></span>
+        <h4>{{annonce.Profession.titre}}</h4>
+    </div>
+    <div class="col-xxl-3"><span><strong>Contrat: </strong></span>
+        <strong>{{annonce.Contrat.titre}}</strong>
+    </div>
+    <div class="col-xxl-5"><span><strong>Experience :</strong></span>{{annonce.Experience.titre}}</div>
+</div>
+{% if fiche == true and ficheliste == false %}
+<div class="row">
+
+    <div class="col-xxl-3"><span><strong>Salaire Annuelle/Horaire
+                :</strong></span>{{annonce.salaireAnnuel}}€ annuelle /{{annonce.horaire}}</div>
+    <div class="col-xxl-2"><span><strong>etat: </strong></span>{{annonce.etat.titre}}</div>
+</div>
+
+<div class="row">
+
+    <div class="col-12"><span><strong>Description: </strong></span>{{annonce.description}}</div>
+
+</div>
+{% if annonce.valider == false %}
+<div class="col-xxl-12 action"><a href="{{path('app_consultant_annonce_validation',{'id':annonce.id})}}"
+        class="btn btn-primary">Valider</a>
+</div>
+{% else %}
+<div class="col-xxl-12 action"><strong>Annonce valider</strong></div>
+{% endif %}
+{% endif %}

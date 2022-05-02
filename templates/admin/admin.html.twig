@@ -1,0 +1,41 @@
+{% if onglet == 'consultant' %}
+{% form_theme formconsultant 'bootstrap_5_layout.html.twig' %}
+{% endif %}
+{% extends 'base.html.twig' %}
+
+{% block title %}admin:trt{% endblock %}
+
+{% block javascripts %}
+{{ encore_entry_script_tags('js/admin') }}
+{% endblock %}
+
+{% block wrapper %}
+
+<div class="container-fluid admin">
+    <h1>Bienvenue dans votre espace: Administrateur</h1>
+
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav-item admin ">
+                <a class="nav-link {% if onglet == 'profil' %} active {% endif %}" href="{{path('app_admin')}}">
+                    profil administrateur
+                </a>
+            </li>
+            <li class="nav-item consultant ">
+                <a class="nav-link {% if onglet == 'consultant' %} active {% endif %}"
+                    href="{{path('app_admin_consultant')}}">
+                    Listes des consultants
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="container">
+        <div class="content  {% if onglet == 'profil' %} admin {% else %}  {{onglet}} {% endif %}">
+            {% if onglet == 'profil' %} {% include 'admin/profil_admin.html.twig'%}{% endif %}
+            {% if onglet == 'consultant' %} {% include 'admin/liste_consultant.html.twig'%}{% endif %}
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+</br>
+{% if userprofil != null %}
+<div class="card fiche {{profil}} alert-dismissible mb-3">
+    <div class="card-header bg-color">fiche<a class="btn btn-close  " href="{{path('app_consultant_candidat')}}"></a>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <p><strong>Email:</strong> {{userprofil.email}}</p>
+                <p><strong>Nom:</strong> {{userprofil.trtProfilcandidat.nom}}</p>
+                <p><strong>Prenom:</strong> {{userprofil.trtProfilcandidat.prenom}}</p>
+            </div>
+            <div class="col-12 col-lg-6">
+                <p><strong>Profession:</strong> {{userprofil.trtProfilcandidat.profession.titre}}</p>
+                <p><strong>Expérience:</strong> {{userprofil.trtProfilcandidat.experience.titre}}</p>
+                <p><strong>Cv:</strong>
+                    <a href="{{asset('./uploads/cv/'~ userprofil.trtProfilcandidat.cv)}}">
+                        {% include 'svg/svg_cv.html.twig' %}<span>CV</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</br>
+{% endif %}

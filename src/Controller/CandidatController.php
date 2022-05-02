@@ -23,7 +23,7 @@ class CandidatController extends BddController
         $user = $this->getUser();
         if ($user->getTrtProfilcandidat())
             $profil = $this->reposProfilCdt->findOneByUser($user);
-        $complet = $this->isProfilComplet($profil, 'ROLE_CANDIDAT');
+        $complet = $this->isProfilComplet($user);
 
         $formprofil = $this->createForm(FormProfilCandidatType::class, $profil);
         $formprofil->handleRequest($request);
@@ -62,7 +62,7 @@ class CandidatController extends BddController
 
             $this->entityManager->persist($profil);
             $this->entityManager->flush();
-            $this->setProfilComplet($user, $profil, 'ROLE_CANDIDAT');
+            $this->setProfilComplet( $profil,$user);
             return $this->redirectToRoute('app_candidat');
         }
 
@@ -87,16 +87,20 @@ class CandidatController extends BddController
 
         $user = $this->getUser();
         $profil = $this->reposProfilCdt->findOneByUser($user);
-
+        $listeAnnonce = array();
         $liste = $this->reposCandidature->findBy(['profil' => $profil->getId()]);
+        $valider = array();
         foreach ($liste as $candidat) {
             $annonce = $this->reposAnnonce->findOneBy(['id' => $candidat->getAnnonce()]);
             $listeAnnonce[] = $annonce;
+            $valider[$annonce->getId()] = $candidat->getValider();
         };
+
         return $this->render('candidat/candidat.html.twig', [
             'page' => 'administration',
             'onglet' => 'annonce',
-            'liste' => $listeAnnonce
+            'liste' => $listeAnnonce,
+            'valider' => $valider
 
         ]);
     }
@@ -111,11 +115,12 @@ class CandidatController extends BddController
             $user = $this->getUser();
             $profil = $this->reposProfilCdt->findOneByUser($user);
             if ($user->getValider()) {
-                $annonce = $this->reposAnnonce->findOneBy(['id' => $id]);
+                //  $annonce = $this->reposAnnonce->findOneBy(['id' => $id]);
                 $candidatures = $this->reposCandidature->findByAnnonceAndProfil($id, $profil->getId());
                 if (!$candidatures) {
                     $candidat = new TrtCandidature();
                     $candidat->setAnnonce($id);
+                    $candidat->setValider(0);
                     $candidat->setProfil($profil->getId());
                     $this->entityManager->persist($candidat);
                     $this->entityManager->flush();
@@ -125,5 +130,24 @@ class CandidatController extends BddController
                 return  $this->redirectToRoute('app_candidat_annonce');
             } else   return  $this->redirectToRoute('app_candidat');
         } else   return  $this->redirectToRoute('app_candidat');
+    }
+
+    /** 
+     * @Route("/candidat/annonces/annuler/candidature/{id}", name= "app_candidat_annonce_annuler_candidature")
+     * IsGranted('ROLE_CANDIDAT')
+     */
+    public function Annulercandidature($id = null, Request $request): Response
+    {
+        if ($id != null) {
+            $user = $this->getUser();
+            $profil = $this->reposProfilCdt->findOneByUser($user);
+            $candidatures = $this->reposCandidature->findByAnnonceAndProfil($id, $profil->getId());
+            if ($candidatures) {
+
+                $this->entityManager->remove($candidatures);
+                $this->entityManager->flush();
+            }
+        }
+        return $this->redirectToRoute('app_candidat_annonce');
     }
 }

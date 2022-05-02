@@ -105,7 +105,8 @@ h2.bg {
     margin: 20px 30px;
     padding-right: 0;
 
-    p {
+    p,
+    div {
         font-size: 28px;
     }
 
@@ -154,8 +155,33 @@ h2.bg {
             display: none;
         }
     }
+
+    .candidatures li {
+        font-size: 21px;
+
+        span.valider {
+            background-color: #ccc;
+        }
+    }
+
+    h3#idnonvalid,
+    h3#idvalid {
+        padding: 7px;
+        background-color: #aaa;
+    }
 }
 
 .btn-svg {
     border: none;
+}
+
+.administration .candidat article {
+    .prof {
+        color: $ColorVertEmpire;
+        text-align: center;
+        background-color: #bbb;
+        border-radius: 10px;
+        font-weight: 500;
+        border: 1px solid $ColorVertEmpire;
+    }
 }

@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\TrtUser;
+use App\Form\MdpFormType;
 use App\Services\EnvoieEmail;
+use App\Form\ResetPassEmailType;
+use App\Form\RegistrationFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

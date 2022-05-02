@@ -9,6 +9,8 @@ use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @extends ServiceEntityRepository<TrtInitpassword>
+ *
  * @method TrtInitpassword|null find($id, $lockMode = null, $lockVersion = null)
  * @method TrtInitpassword|null findOneBy(array $criteria, array $orderBy = null)
  * @method TrtInitpassword[]    findAll()
@@ -51,10 +53,10 @@ class TrtInitpasswordRepository extends ServiceEntityRepository
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('i.id', 'ASC')
+            ->orderBy('t.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -65,8 +67,8 @@ class TrtInitpasswordRepository extends ServiceEntityRepository
     /*
     public function findOneBySomeField($value): ?TrtInitpassword
     {
-        return $this->createQueryBuilder('i')
-            ->andWhere('i.exampleField = :val')
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

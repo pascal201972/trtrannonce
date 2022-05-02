@@ -3,8 +3,13 @@
 namespace App\DataFixtures;
 
 use App\Entity\TrtUser;
+use App\Entity\TrtAnnonce;
+use App\Entity\TrtContrat;
+use App\Entity\TrtEtatAnnonce;
 use App\Entity\TrtExperiences;
 use App\Entity\TrtProfessions;
+use App\Entity\TrtProfilcandidat;
+use App\Entity\TrtProfilrecruteur;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use App\Repository\TrtExperiencesRepository;
@@ -84,6 +89,130 @@ class AppFixtures extends Fixture
             $experience->setTitre($exp);
             $manager->persist($experience);
             $arrayExp[] = $experience;
+        }
+        $manager->flush();
+        // liste Nom
+        $listeNoms = array(
+            "Martin", "Bernard", "Garnier", "Dubois", "Faure", "Thomas", "Rousseau", "Robert", "Blanc",
+            "Richars", "Guerin", "Petit", "Muller", "Durand", "Henry", "Leroy", "Roussel", "Moreau", "Nicolas", "Simon", "Perrin", "Laurent", "Morin", "Lefebvre", "Mathieu", "Michel", "Clement", "Garcia", "Gauthier", "David", "Dumont", "Bertrand", "Lopez", "Roux", "Fontaine", "Vincent", "Chevalier", "Fournier", "Robin"
+        );
+        $listePrenoms = array(
+            "LEO", "GABRIEL ", " RAPHAEL", "ARTHUR", "LOUIS", "JULES", "MAEL", "PATRICK", "LUCAS",
+            "HUGO", "NOAH", "JEAN", "GABIN", "SACHA", "REMI", "PAUL", "ETHAN", "NATHAN", "JADE", "LOUISE", "EMMA",
+            "ALICE", "AMBRE", "FRANçOISE", "ROSE", "CHLOE", "LEA", "MARTINE", "INES", "ANNA", "MARINE", "JULIA", "ROMY", "LENA", "MARILENE",
+            "ELENA", "AGATHE", "EVA"
+        );
+        // liste de candidats
+        for ($i = 1; $i < 15; $i++) {
+            $usercand = new TrtUser();
+            $nbr = random_int(101, 299);
+            $usercand->setRoles(['ROLE_CANDIDAT']);
+            $usercand->setValider(0);
+            $usercand->setProfil(1);
+            $usercand->setEmail('candidatfaux' . $i . $nbr . '@laposte.net');
+            $usercand->setPassword($this->passwordEncoder->hashPassword($usercand, 'Candidatfaux' . $i . $nbr . 'Admin!2022'));
+
+            $profil = new TrtProfilcandidat();
+
+            $profil->setNom($listeNoms[random_int(0, count($listeNoms) - 1)]);
+            $prenom = strtolower($listePrenoms[random_int(0, count($listePrenoms) - 1)]);
+            $profil->setPrenom($prenom);
+            $indexpro = random_int(0, count($arrayProf) - 1);
+            $profil->setCv($listecv[$indexpro] . 'pdf');
+            $profession = $this->reposProfessions->findOneBy(['titre' => $listeprofessions[$indexpro]]);
+            $profil->setProfession($profession);
+            $index = random_int(0, count($arrayExp) - 1);
+            $experience = $this->reposExperience->findOneBy(['titre' => $listeExperiences[$index]]);
+            $profil->setExperience($experience);
+            $manager->persist($profil);
+            $usercand->setTrtProfilcandidat($profil);
+            $manager->persist($usercand);
+        }
+        $manager->flush();
+
+        $NomRestaurant = array("Le cheval blanc", "La Tour d'Argent", "Auguste ", "Le saint Honoré", "La Table du noble", "Le baudelaire", "Le zola", "Le Jules Verne", "Le palais Royale", "L'argenterie");
+        $NomHotel = array("AirHotel", "AcHotel", "ArcHotel", "AtlasHotel", "AstroHotel", "BarceloHotel", "BritHotel", "AtlantisHotel", "CondorHotel", "FranceHotel");
+        $Etablisement = array("Restaurant", "Hotel");
+        $ville = array("Bordeaux", "Toulouse", "Paris", "Marseille", "Nimes", "Angers", "Nantes", "Lille", "Limoges", "Tours");
+        $code = array(330, 310, 750, 130, 300, 490, 440, 590, 870, 370);
+        $rue = array(" des puits", "Emile Zola", "François Mitterant", "Jules Vernes", "de la paix", "de la tournelle", "des rosiers", "des petits champs", "de l'église", " Monsieur le prince");
+        $typerue = array("rue", "boulevard", "place");
+        // liste de recruteurs
+        for ($i = 1; $i < 15; $i++) {
+            $userRec = new TrtUser();
+            $nbr = random_int(101, 299);
+            $userRec->setValider(random_int(0, 1));
+            $userRec->setRoles(['ROLE_RECRUTEUR']);
+            $userRec->setProfil(1);
+            $userRec->setEmail('recruteurfaux' . $i . $nbr . '@laposte.net');
+            $userRec->setPassword($this->passwordEncoder->hashPassword($userRec, 'recruteurfaux' . $i . $nbr . 'Admin!2022'));
+            $manager->persist($userRec);
+            $profilrec = new TrtProfilrecruteur();
+            $etab = random_int(0, 1);
+            $profilrec->setEtablissement($Etablisement[$etab]);
+
+            if ($etab == 0)
+                $profilrec->setNom($NomRestaurant[random_int(0, count($NomRestaurant) - 1)]);
+            else
+                $profilrec->setNom($NomHotel[random_int(0, count($NomHotel) - 1)]);
+            $numero = random_int(10, 99);
+            $adress = $numero . ' ' . $typerue[random_int(0, 2)] . ' ' . $rue[random_int(0, 9)];
+            $profilrec->setAdresse($adress);
+            $indexville = random_int(0, 9);
+            $profilrec->setVille($ville[$indexville]);
+            $profilrec->setCodePostal($code[$indexville] * 100 + random_int(10, 100));
+            $arrayRecruteur[] = $profilrec;
+            $manager->persist($profilrec);
+            $userRec->setTrtProfilrecruteur($profilrec);
+            $manager->persist($userRec);
+        }
+        $manager->flush();
+        // annonce
+
+        $arrayEt = array("Annulé", "Pourvue", "Non pourvue");
+        $arrayCont = array("CDI", "CDD saisonnier", "CDD 2 mois", "CDD 3 mois", "CDD 6 mois", "CDD 1 ans");
+        foreach ($arrayEt as $et) {
+            $etat = new TrtEtatAnnonce();
+            $etat->setTitre($et);
+            $arrayEtat[] = $etat;
+            $manager->persist($etat);
+        }
+        foreach ($arrayCont as $ct) {
+            $ctr = new TrtContrat();
+            $ctr->setTitre($ct);
+            $arrayCtr[] = $ctr;
+            $manager->persist($ctr);
+        }
+        $manager->flush();
+        for ($i = 1; $i < 10; $i++) {
+            $indexrecruteur = random_int(0, count($arrayRecruteur) - 1);
+            $recruteur = $arrayRecruteur[$indexrecruteur];
+
+            if ($recruteur->getIdUser()->getValider() == true) {
+                $annonce = new TrtAnnonce();
+                $indexpro = random_int(0, count($arrayProf) - 1);
+
+                $annonce->setExperience($arrayExp[random_int(0, count($arrayExp) - 1)]);
+                $annonce->setContrat($arrayCtr[random_int(0, count($arrayCtr) - 1)]);
+                $annonce->setEtat($arrayEtat[2]);
+
+                $annonce->setRecruteur($recruteur);
+
+                if ($recruteur->getEtablissement() == 'Restaurant')
+                    $indexpro = random_int(0, 9);
+                else $indexpro = random_int(10, 15);
+
+
+                $annonce->setProfession($arrayProf[$indexpro]);
+                $annonce->setExperience($arrayExp[random_int(0, count($arrayExp) - 1)]);
+                $annonce->setDescription("Homines enim eruditos et sobrios ut infaustos et inutiles vitant, eo quoque accedente quod et nomenclatores adsueti haec et talia venditare, mercede accepta lucris quosdam et prandiis inserunt subditicios ignobiles et obscuros.");
+                $salaire = array(22000, 23000, 25000, 28000, 24000, 30000);
+                $annonce->setComplet(true);
+                $annonce->setSalaireAnnuel($salaire[random_int(0, 5)]);
+                $annonce->setHoraire('8h / jour');
+                $annonce->setValider(0);
+                $manager->persist($annonce);
+            }
         }
         $manager->flush();
     }

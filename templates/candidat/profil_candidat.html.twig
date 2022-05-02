@@ -56,7 +56,10 @@
                 <p class="bg-succes align">Le cv à été ajouter. {% include
                     'svg/svg_valider_check.html.twig'%}</p>
                 {% endif %}
-                <p class="ft-24"><strong>{{profil.cv}}.pdf</strong></p>
+                {% if profil.cv !="" %}
+                <p>{% include 'svg/svg_pdf.html.twig'%}<strong class="ft-24">{{profil.cv}}</strong></p>
+
+                {% endif %}
                 <h3>Ajouter ou modifier votre cv</h3>
                 {{ form_start(formcv) }}
 

@@ -61,7 +61,7 @@ class TrtAnnonceRepository extends ServiceEntityRepository
         ;
     }
     */
- /*
+    /*
     public function findByValider($value)
     {
         return $this->createQueryBuilder('t')
@@ -73,7 +73,6 @@ class TrtAnnonceRepository extends ServiceEntityRepository
         ;
     }
     
-
     /*
     public function findOneBySomeField($value): ?TrtAnnonce
     {
@@ -85,4 +84,5 @@ class TrtAnnonceRepository extends ServiceEntityRepository
         ;
     }
     */
+    
 }

@@ -107,4 +107,10 @@ class TrtProfilcandidat
 
         return $this;
     }
+
+    public function getCandidature(): ?array
+    {
+
+        return array();
+    }
 }

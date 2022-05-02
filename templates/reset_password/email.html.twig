@@ -1,0 +1,35 @@
+{% form_theme EmailForm 'bootstrap_5_layout.html.twig' %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialisation du mot de passe!{% endblock %}
+
+{% block wrapper %}
+{% for message in app.flashes('successEmail') %}
+<div class="alert alert-success" role="alert">{{ message}}</div>
+{% endfor %}
+
+<div class="form connect">
+    <div>
+        <h1 class="font-weight-normal bgMenu"> Réinitialiser votre mot de passe</h1>
+        <div>
+
+            {% for flashError in app.flashes('ErreurEmail') %}
+            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+            {% endfor %}
+            {{ form_start(EmailForm) }}
+
+            {{ form_row(EmailForm.email,{'attr': {'class': 'form-control'}}) }}
+
+
+
+            <button class="btn btn-lg btn-primary" type="submit">Envoyé un email de réinitialisation</button>
+            {{ form_end(EmailForm) }}
+        </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
