@@ -36,7 +36,7 @@ class AppFixtures extends Fixture
         // $product = new Product();
         $user1 = new TrtUser();
         $user1->setEmail('jasminpascal2016@gmail.com');
-        $user1->setRoles(['ROLE_ADMIN']);
+        $user1->setRoles('ROLE_ADMIN');
         $user1->setProfil(0);
         $user1->setValider(1);
         $user1->setPassword($this->passwordEncoder->hashPassword($user1, 'AdminJasmin!2022'));
@@ -44,14 +44,23 @@ class AppFixtures extends Fixture
 
         $user2 = new TrtUser();
         $user2->setEmail('AdminitrateurTrt@laposte.net');
-        $user2->setRoles(['ROLE_ADMIN']);
+        $user2->setRoles('ROLE_ADMIN');
         $user2->setProfil(0);
         $user2->setValider(1);
         $user2->setPassword($this->passwordEncoder->hashPassword($user2, 'AdminTrt!2022'));
         $manager->persist($user2);
-        $manager->flush();
+
+        $user3 = new TrtUser();
+        $user3->setEmail('consultant2022@laposte.net');
+        $user3->setRoles('ROLE_CONSULTANT');
+        $user3->setProfil(1);
+        $user3->setValider(1);
+        $user3->setPassword($this->passwordEncoder->hashPassword($user2, 'ConsultantAdmin!2022'));
+        $manager->persist($user3);
 
         $manager->flush();
+
+
         // Professions
         $listeprofessions = array(
             "Barman/barmaid", "Cuisinier/Cuisinière", "chef de partie",
@@ -91,6 +100,7 @@ class AppFixtures extends Fixture
             $arrayExp[] = $experience;
         }
         $manager->flush();
+
         // liste Nom
         $listeNoms = array(
             "Martin", "Bernard", "Garnier", "Dubois", "Faure", "Thomas", "Rousseau", "Robert", "Blanc",
@@ -106,7 +116,7 @@ class AppFixtures extends Fixture
         for ($i = 1; $i < 15; $i++) {
             $usercand = new TrtUser();
             $nbr = random_int(101, 299);
-            $usercand->setRoles(['ROLE_CANDIDAT']);
+            $usercand->setRoles('ROLE_CANDIDAT');
             $usercand->setValider(0);
             $usercand->setProfil(1);
             $usercand->setEmail('candidatfaux' . $i . $nbr . '@laposte.net');
@@ -117,6 +127,7 @@ class AppFixtures extends Fixture
             $profil->setNom($listeNoms[random_int(0, count($listeNoms) - 1)]);
             $prenom = strtolower($listePrenoms[random_int(0, count($listePrenoms) - 1)]);
             $profil->setPrenom($prenom);
+            $profil->setNumero(uniqid());
             $indexpro = random_int(0, count($arrayProf) - 1);
             $profil->setCv($listecv[$indexpro] . 'pdf');
             $profession = $this->reposProfessions->findOneBy(['titre' => $listeprofessions[$indexpro]]);
@@ -142,8 +153,9 @@ class AppFixtures extends Fixture
             $userRec = new TrtUser();
             $nbr = random_int(101, 299);
             $userRec->setValider(random_int(0, 1));
-            $userRec->setRoles(['ROLE_RECRUTEUR']);
+            $userRec->setRoles('ROLE_RECRUTEUR');
             $userRec->setProfil(1);
+            $profil->setNumero(uniqid());
             $userRec->setEmail('recruteurfaux' . $i . $nbr . '@laposte.net');
             $userRec->setPassword($this->passwordEncoder->hashPassword($userRec, 'recruteurfaux' . $i . $nbr . 'Admin!2022'));
             $manager->persist($userRec);
@@ -184,6 +196,7 @@ class AppFixtures extends Fixture
             $manager->persist($ctr);
         }
         $manager->flush();
+
         for ($i = 1; $i < 10; $i++) {
             $indexrecruteur = random_int(0, count($arrayRecruteur) - 1);
             $recruteur = $arrayRecruteur[$indexrecruteur];
@@ -195,6 +208,8 @@ class AppFixtures extends Fixture
                 $annonce->setExperience($arrayExp[random_int(0, count($arrayExp) - 1)]);
                 $annonce->setContrat($arrayCtr[random_int(0, count($arrayCtr) - 1)]);
                 $annonce->setEtat($arrayEtat[2]);
+                $ref = 'ann100' . $annonce->getId();
+                $annonce->setRef($ref);
 
                 $annonce->setRecruteur($recruteur);
 

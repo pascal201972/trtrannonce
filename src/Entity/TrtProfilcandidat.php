@@ -31,6 +31,9 @@ class TrtProfilcandidat
     #[ORM\OneToOne(inversedBy: 'trtProfilcandidat', targetEntity: TrtUser::class, cascade: ['persist', 'remove'])]
     private $idUser;
 
+    #[ORM\Column(type: 'string', length: 50)]
+    private $numero;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -112,5 +115,17 @@ class TrtProfilcandidat
     {
 
         return array();
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(string $numero): self
+    {
+        $this->numero = $numero;
+
+        return $this;
     }
 }

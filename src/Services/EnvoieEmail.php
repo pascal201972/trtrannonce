@@ -18,12 +18,24 @@ class EnvoieEmail
 
     public function SendEmail(string $email, $subject, $template, $context)
     {
-        $email = (new TemplatedEmail())
+        $contentemail = (new TemplatedEmail())
             ->from('trtrecrutement2022@gmail.com')
             ->to($email)
             ->subject($subject)
             ->htmlTemplate($template)
             ->context($context);
-        $this->mailer->send($email);
+
+        $this->mailer->send($contentemail);
+    }
+    public function SendEmailSimple(string $email, $subject, $template)
+    {
+        $contentemail = (new TemplatedEmail())
+            ->from('trtrecrutement2022@gmail.com')
+            ->to($email)
+            ->subject($subject)
+            ->htmlTemplate($template);
+
+
+        $this->mailer->send($contentemail);
     }
 }

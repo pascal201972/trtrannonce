@@ -44,45 +44,57 @@
 
         <div class="tbody">
             {% for ann in liste %}
-            {% if ann.valider == 0 %}
-
-            <ul class="novalid  {% if  loop.index % 2 == 0  %} paire {% else %} impaire {% endif %} row">
-
-                <li class="col-xxl-1"><span><strong>Profession:</strong></span>{{ann.Profession.titre}}</li>
-                <li class="col-xxl-1"><span><strong>Contrat: </strong></span>{{ann.Contrat.titre}}</li>
-                <li class="col-xxl-2"><span><strong>Experience :</strong></span>{{ann.Experience.titre}}</li>
-                <li class="col-xxl-1"><span><strong>Salaire Annuelle/Horaire
-                            :</strong></span>{{ann.salaireAnnuel}}/{{ann.horaire}}</li>
-                <li class="col-xxl-3"><span><strong>Description: </strong></span>{{ann.description|u.truncate(30)}}
-                </li>
-                <li class="col-xxl-1"><span><strong>etat: </strong></span>{{ann.etat.titre}}</li>
-                <li class="col-xxl-1"><span><strong>voir: </strong></span><a class="voir"
-                        href="{{path('app_recruteur_annonce_voir',{'id':ann.id})}}">{% include
-                        'svg/svg_voir.html.twig' %}
-                    </a>
-                </li>
-
-                {% if ann.complet == true %}
-                {% if ann.valider == true %}
-                <li class="col-xxl-1">valider</li>
-                {% else %}
-                <li class="col-xxl-1">Non valider</li>
-                {% endif %}
-                {% else %}
-                <li class="col-xxl-1"><strong>Annonce incomplète</strong></li>
-                {% endif %}
+            <div class="novalid  {% if  loop.index % 2 == 0  %} paire {% else %} impaire {% endif %} row">
 
 
-                <li class="col-xxl-1"><span><strong>modifier/supprimer </strong></span>
-                    <a class="voir" href="{{path('app_recruteur_annonce_modifier',{'id':ann.id})}}">{% include
-                        'svg/svg_modifier.html.twig' %}
-                    </a>
-                    <a class="voir" href="{{path('app_recruteur_annonce_supprimer',{'id':ann.id})}}">{% include
-                        'svg/svg_supprimer.html.twig' %}
-                    </a>
-                </li>
-            </ul>
-            {% endif %}
+                <ul>
+
+                    <li class="col-xxl-1"><span><strong>Profession:</strong></span>{{ann.Profession.titre}}</li>
+                    <li class="col-xxl-1"><span><strong>Contrat: </strong></span>{{ann.Contrat.titre}}</li>
+                    <li class="col-xxl-2"><span><strong>Experience :</strong></span>{{ann.Experience.titre}}</li>
+                    <li class="col-xxl-1"><span><strong>Salaire Annuelle/Horaire
+                                :</strong></span>{{ann.salaireAnnuel}} €/{{ann.horaire}}</li>
+                    <li class="col-xxl-3"><span><strong>Description: </strong></span>{{ann.description|u.truncate(30)}}
+                    </li>
+                    <li class="col-xxl-1"><span><strong>etat: </strong></span>{{ann.etat.titre}}</li>
+                    <li class="col-xxl-1"><span><strong>voir: </strong></span><a class="voir"
+                            href="{{path('app_recruteur_annonce_voir',{'id':ann.id})}}">{% include
+                            'svg/svg_voir.html.twig' %}
+                        </a>
+                    </li>
+
+                    {% if ann.complet == true %}
+                    {% if ann.valider == true %}
+                    <li class="col-xxl-1 color-alert">valider</li>
+                    {% else %}
+                    <li class="col-xxl-1">Non valider</li>
+                    {% endif %}
+                    {% else %}
+                    <li class="col-xxl-1"><strong>Annonce incomplète</strong></li>
+                    {% endif %}
+
+
+                    <li class="col-xxl-1"><span><strong>modifier/supprimer </strong></span>
+                        <a class="voir" href="{{path('app_recruteur_annonce_modifier',{'id':ann.id})}}">
+                            {% include 'svg/svg_modifier.html.twig' %}
+
+                        </a>
+                        <a class="voir" href="{{path('app_recruteur_annonce_supprimer',{'id':ann.id})}}">
+                            {% include 'svg/svg_supprimer.html.twig' %}
+                        </a>
+                    </li>
+                </ul>
+                <h5>Liste des candidats</h5>
+                <ul class="liste-candidat">
+                    {% for cdts in listeCandidats[ann.id] %}
+
+                    <li>{{ann.id}},{{cdts.nom}},{{cdts.prenom}},{{cdts.profession}},{{cdts.experience}},<strong>CV</strong>
+                        <a href="{{asset('./uploads/cv/'~ cdts.cv)}}" target="_blank" title="voir le cv"> {% include
+                            'svg/svg_pdf.html.twig' %}</a></li>
+                    {% endfor %}
+                </ul>
+
+            </div>
             {% endfor %}
         </div>
     </section>

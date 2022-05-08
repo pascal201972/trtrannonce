@@ -43,6 +43,9 @@ class TrtAnnonce
     #[ORM\ManyToOne(targetEntity: TrtEtatAnnonce::class, inversedBy: 'trtAnnonces')]
     private $etat;
 
+    #[ORM\Column(type: 'string', length: 50)]
+    private $ref;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -164,6 +167,18 @@ class TrtAnnonce
     public function setEtat(?TrtEtatAnnonce $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getRef(): ?string
+    {
+        return $this->ref;
+    }
+
+    public function setRef(string $ref): self
+    {
+        $this->ref = $ref;
 
         return $this;
     }

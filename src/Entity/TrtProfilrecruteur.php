@@ -36,6 +36,9 @@ class TrtProfilrecruteur
     #[ORM\OneToMany(mappedBy: 'recruteur', targetEntity: TrtAnnonce::class)]
     private $annonce;
 
+    #[ORM\Column(type: 'string', length: 50)]
+    private $numero;
+
     public function __construct()
     {
         $this->annonce = new ArrayCollection();
@@ -144,6 +147,18 @@ class TrtProfilrecruteur
                 $annonce->setRecruteur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNumero(): ?string
+    {
+        return $this->numero;
+    }
+
+    public function setNumero(string $numero): self
+    {
+        $this->numero = $numero;
 
         return $this;
     }

@@ -1,4 +1,4 @@
-{% if onglet == 'consultant' %}
+{% if onglet == 'consultant' and fiche == false %}
 {% form_theme formconsultant 'bootstrap_5_layout.html.twig' %}
 {% endif %}
 {% extends 'base.html.twig' %}
@@ -11,7 +11,7 @@
 
 {% block wrapper %}
 
-<div class="container-fluid admin">
+<div class="container-fluid admin wrapper">
     <h1>Bienvenue dans votre espace: Administrateur</h1>
 
     <div class="container">

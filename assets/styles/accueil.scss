@@ -68,10 +68,103 @@
         }
 
         p {
-            color: #efefef;
+            color: $ColorVertFonce;
             font-size: 26px;
             padding: 3px;
             font-weight: 600;
         }
+    }
+
+
+}
+
+
+.home .content {
+    margin: 50px auto;
+
+
+    h2 {
+        font-size: 50px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .card-header {
+        h3 {
+            color: $ColorOrange;
+            text-align: center;
+        }
+    }
+
+    .card {
+        border: 1px solid $ColorVertEmpire;
+        margin-top: 20px;
+    }
+
+    .card-body {
+
+        background: ColorVertCanardRgba(0.8);
+        color: $ColorVertFonce;
+        height: 350px;
+        font-family: 'Lalezar', cursive;
+
+        li {
+            font-size: 26px;
+            list-style-type: none;
+            margin-top: 15px;
+
+
+            span {
+                display: inline-block;
+                width: 40px;
+                border-radius: 20px;
+                background-color: $ColorVertFonce;
+                color: $ColorOrange;
+                text-align: center;
+            }
+        }
+    }
+}
+
+footer {
+    color: $ColorVertCanard;
+
+    li {
+        list-style: none;
+    }
+
+
+    p {
+        text-align: center;
+        margin-top: 10px;
+
+        a {
+            font-size: 20px;
+            color: $ColorVertCanard;
+
+            svg {
+                color: $ColorVertCanard;
+            }
+
+            &:hover,
+            svg:hover {
+                color: $ColorVertCanard;
+            }
+        }
+
+    }
+}
+
+@media (max-width: 992px) {
+
+    .home .content {
+        .card-body {
+            height: 380px;
+
+            li {
+                font-size: 20px;
+            }
+        }
+
     }
 }

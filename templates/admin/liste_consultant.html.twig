@@ -1,4 +1,6 @@
 <div class="container  admin">
+    {% if fiche == false %}
+
     {{ form_start(formconsultant) }}
     {{ form_row(formconsultant.email,{'attr': {'class': 'form-control'}}) }}
     {{ form_row(formconsultant.plainPassword, {
@@ -7,6 +9,22 @@
     <div> <button type="submit" class="btn btn-primary">Ajouter</button></div>
 
     {{ form_end(formconsultant) }}
+    {% else %}
+    <div class="card fiche annonce alert-dismissible mb-3">
+        <div class="card-header bg-color"><strong>Confirmer la suppression</strong><a class="btn btn-close  "
+                href="{{path('app_admin_consultant')}}" title="annuler"></a>
+        </div>
+
+        <div class="card-body">
+            <p class="bg-alert color-alert">Confirmer le suppression du
+                consultant:<strong>{{ficheconsultant.email}}</strong></p>
+            <p><a href="{{path('app_admin_consultant_supprimer_confirmer',{'id':ficheconsultant.id,'confirmer':'confirmer'})}}"
+                    class="btn btn-primary">Suppression</a>
+            </p>
+        </div>
+    </div>
+
+    {% endif %}
     <br />
 </div>
 
@@ -22,13 +40,17 @@
             </ul>
         </div>
         <div class="tbody">
-            {% for consultant in liste %}
-            <ul class="{% if  loop.index % 2 == 0  %} paire {% else %} impaire {% endif %}">
-                <li>{{consultant.Email}}</li>
-                <li></li>
-                <li></li>
+
+            <ul>
+                {% for consultant in liste %}
+                <li class=" {% if  loop.index % 2 == 0  %} paire {% else %} impaire {% endif %}">
+                    <span class="consultant">{{consultant.Email}}</span>
+                    <span><a href="{{path('app_admin_consultant_supprimer',{'id':consultant.id})}}"
+                            class="btn btn-primary">{% include 'svg/svg_supprimer.html.twig' %}</a></span>
+                </li>
+                {% endfor %}
             </ul>
-            {% endfor %}
+
         </div>
     </section>
 

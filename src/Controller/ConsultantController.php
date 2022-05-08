@@ -237,7 +237,7 @@ class ConsultantController extends BddController
      * IsGranted("ROLE_CONSULTANT")
      * @return Response
      */
-    public function validercandidature($id,EnvoieEmail $envoieEmail)
+    public function validercandidature($id, EnvoieEmail $envoieEmail)
     {
         $parametres = $this->getannonce(false);
         if ($id != null) {
@@ -246,12 +246,20 @@ class ConsultantController extends BddController
                 $cdt->setValider(true);
                 $this->entityManager->persist($cdt);
                 $this->entityManager->flush();
-                $subject = "uncandidat pour votre annoonce.";
-                $template = 'templateEmail/email_init_password.html.twig';
-                $context = ['id' => $id, 'token' => $token];
-                
+                $subject = "un candidat pour votre annonce.";
+                $template = 'templateEmail/email_candidature.html.twig';
+
+                $candidature = $this->reposCandidature->findEmailUserBycandidature($id);
+                $email = $candidature['email'];
+                $context = [
+                    'recruteur' => $candidature['recruteur'],
+                    'profession' => $candidature['profession'],
+                    'contrat' => $candidature['contrat'],
+                    'experience' => $candidature['experience']
+
+                ];
                 $envoieEmail->SendEmail($email, $subject, $template, $context);
-                $this->addFlash('successEmail', "Un email vient de vous être envoyé.");
+                // $this->addFlash('successEmail', "Un email vient de vous être envoyé.");
             }
         }
         return $this->redirectToRoute('app_consultant_annonce',  $parametres);

@@ -8,7 +8,7 @@
 {{ encore_entry_script_tags('js/admin') }}
 {% endblock %}
 {% block wrapper %}
-<div class="container-fluid candidat">
+<div class="container-fluid candidat wrapper">
     <h1>Bienvenue dans votre espace candidat: </h1>
     <ul class="nav nav-tabs">
         <li class="nav-item candidat ">
@@ -28,5 +28,5 @@
         {% if onglet == 'profil' %} {% include 'candidat/profil_candidat.html.twig'%}{% endif %}
         {% if onglet == 'annonce' %} {% include 'candidat/liste_candidature.html.twig'%}{% endif %}
     </div>
-
-    {% endblock %}
+</div>
+{% endblock %}

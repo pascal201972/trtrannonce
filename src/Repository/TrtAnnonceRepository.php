@@ -84,5 +84,13 @@ class TrtAnnonceRepository extends ServiceEntityRepository
         ;
     }
     */
-    
+    public function findDernier()
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.id', 'DESC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

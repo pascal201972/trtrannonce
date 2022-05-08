@@ -62,10 +62,23 @@ class TrtUserRepository extends ServiceEntityRepository implements PasswordUpgra
         $this->_em->flush();
     }
 
+
+    public function findOneByRoleAndId($id, $role): ?TrtUser
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.id = :val')
+            ->setParameter('val', $id)
+            ->andWhere('t.roles = :role')
+            ->setParameter('role', $role)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     // /**
     //  * @return TrtUser[] Returns an array of TrtUser objects
     //  */
     /*
+
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('t')

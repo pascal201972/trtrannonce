@@ -19,6 +19,12 @@ h1 {
 
 .administration .content {
     margin: 0 20px;
+
+
+}
+
+.administration .tbody.box-accordeon {
+    min-height: 200px;
 }
 
 .boutons {
@@ -119,6 +125,8 @@ h2.bg {
     ul li {
         list-style: none;
 
+
+
         .btn {
             width: 150px;
             margin: 0 auto;
@@ -169,6 +177,11 @@ h2.bg {
         padding: 7px;
         background-color: #aaa;
     }
+
+    .tbody#valid,
+    .tbody#novalid {
+        min-height: 300px;
+    }
 }
 
 .btn-svg {
@@ -184,4 +197,20 @@ h2.bg {
         font-weight: 500;
         border: 1px solid $ColorVertEmpire;
     }
+
+
+}
+
+.administration .liste-candidat {
+    justify-content: left !important;
+    margin-left: 20px;
+
+    li {
+        list-style: disc;
+    }
+}
+
+.administration ul li span.consultant {
+    display: inline-block;
+    width: 80%;
 }

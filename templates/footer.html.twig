@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-4">
+            <h5>Liste des professions</h5>
+            <ul>
+                {% if profession is defined %}
+                {% for pro in profession %}
+                <li>{{pro.titre}}</li>
+                {% endfor %}
+                {% endif %}
+
+            </ul>
+
+
+        </div>
+        <div class="col-12 col-lg-4">
+            <p>
+                <a href="">
+                    {% include 'svg/svg_contact.html.twig'%}
+                    contact
+                </a>
+            </p>
+            <p> <a href="">
+
+                    mentions légales
+                </a>
+            </p>
+
+        </div>
+        <div class="col-12 col-lg-4">
+            <p>
+                <a href="">
+                    {% include 'svg/svg_twiter.html.twig'%}
+                </a>
+            </p>
+            <p>
+                <a href="">
+                    {% include 'svg/svg_facebook.html.twig'%}
+                </a>
+            </p>
+
+
+        </div>
+    </div>
+</div>

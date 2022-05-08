@@ -50,7 +50,7 @@ class CandidatController extends BddController
                     $profil->setCv($newFilename);
                     $this->entityManager->persist($profil);
                     $this->entityManager->flush();
-                    $this->setProfilComplet($user, $profil, 'ROLE_CANDIDAT');
+                    $this->setProfilComplet($profil, $user);
                     return $this->redirectToRoute('app_candidat');
                 } catch (FileException $e) {
 
@@ -62,7 +62,7 @@ class CandidatController extends BddController
 
             $this->entityManager->persist($profil);
             $this->entityManager->flush();
-            $this->setProfilComplet( $profil,$user);
+            $this->setProfilComplet($profil, $user);
             return $this->redirectToRoute('app_candidat');
         }
 

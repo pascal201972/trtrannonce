@@ -32,7 +32,7 @@ class RecruteurController extends BddController
         $complet = false;
         if ($profilRecruteur) {
 
-            $complet = $this->isProfilComplet($profilRecruteur, $user);
+            $complet = $this->isProfilComplet($user);
         } else {
             $profilRecruteur = new TrtProfilrecruteur();
             $complet = false;
@@ -45,7 +45,7 @@ class RecruteurController extends BddController
 
         $formeProfilRecruteur = $this->createForm(FormProfilRecruteurType::class, $profilRecruteur);
         $formeProfilRecruteur->handleRequest($request);
-        $complet = $this->isProfilComplet($profilRecruteur, $user);
+        $complet = $this->isProfilComplet($user);
 
         $parametres = [
             'page' => 'administration',
@@ -192,7 +192,11 @@ class RecruteurController extends BddController
 
     public function setAction($action, $annonce, $profil)
     {
-        if ($action == 'ajouter') $profil->addAnnonce($annonce);
+        if ($action == 'ajouter') {
+            $ref = 'ann100' . $annonce->getId();
+            $annonce->setRef($ref);
+            $profil->addAnnonce($annonce);
+        }
         $annonce->setRecruteur($profil);
         $annonce->setValider(0);
         $complet = $this->isAnnonceComplet($annonce);
@@ -210,10 +214,18 @@ class RecruteurController extends BddController
     {
         $liste = array();
         $profilRecruteur = $this->reposProfilRecruteur->findOneByUser($user);
+        $listeprofil = array();
         if ($profilRecruteur) {
 
             $liste = $profilRecruteur->getAnnonce();
+            foreach ($liste as $annonce) {
+
+                $candidat = $this->reposCandidature->findProfilValiderByAnnonce($annonce->getId());
+
+                $listeprofil[$annonce->getId()] = $candidat;
+            }
         }
+
         if ($id == null) {
             $annonce = new TrtAnnonce();
         } else {
@@ -231,7 +243,8 @@ class RecruteurController extends BddController
             'formannonce' => $formAnnonce->createView(),
             'liste' => $liste,
             'action' => $action,
-            'valider' => $valider
+            'valider' => $valider,
+            'listeCandidats' => $listeprofil
         ];
         $route['soumis'] = false;
         switch ($action) {

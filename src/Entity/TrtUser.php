@@ -20,8 +20,8 @@ class TrtUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
 
-    #[ORM\Column(type: 'json')]
-    private $roles = [];
+    #[ORM\Column(type: 'string')]
+    private $roles;
 
     #[ORM\Column(type: 'string')]
     private $password;
@@ -40,6 +40,12 @@ class TrtUser implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToOne(mappedBy: 'user', targetEntity: TrtInitpassword::class, cascade: ['persist', 'remove'])]
     private $initPassword;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $initMotdepasse;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $expire;
 
     public function getId(): ?int
     {
@@ -81,14 +87,14 @@ class TrtUser implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        $arrayroles[] = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $arrayroles[] = 'ROLE_USER';
 
-        return array_unique($roles);
+        return array_unique($arrayroles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(string $roles): self
     {
         $this->roles = $roles;
 
@@ -216,6 +222,30 @@ class TrtUser implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->initPassword = $initPassword;
+
+        return $this;
+    }
+
+    public function getInitMotdepasse(): ?string
+    {
+        return $this->initMotdepasse;
+    }
+
+    public function setInitMotdepasse(?string $initMotdepasse): self
+    {
+        $this->initMotdepasse = $initMotdepasse;
+
+        return $this;
+    }
+
+    public function getExpire(): ?int
+    {
+        return $this->expire;
+    }
+
+    public function setExpire(?int $expire): self
+    {
+        $this->expire = $expire;
 
         return $this;
     }

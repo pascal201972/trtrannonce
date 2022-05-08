@@ -2,11 +2,15 @@
 
 namespace App\Repository;
 
+use App\Entity\TrtUser;
+use App\Entity\TrtAnnonce;
+use App\Entity\TrtContrat;
 use App\Entity\TrtCandidature;
 use App\Entity\TrtExperiences;
 use App\Entity\TrtProfessions;
 use Doctrine\ORM\ORMException;
 use App\Entity\TrtProfilcandidat;
+use App\Entity\TrtProfilrecruteur;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -81,6 +85,23 @@ class TrtCandidatureRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+    public function findProfilValiderByAnnonce($annonce)
+    {
+        return $this->createQueryBuilder('t')
+            ->from(TrtProfilcandidat::class, 'p')
+            ->from(TrtProfessions::class, 'w')
+            ->from(TrtExperiences::class, 'e')
+            ->select('t.id,p.nom,p.prenom, w.titre as profession, e.titre as experience,p.cv')
+            ->andWhere('p.profession = w.id')
+            ->andWhere('p.experience = e.id')
+            ->andWhere('t.annonce = :an')
+            ->andWhere('t.valider = :valid')
+            ->setParameter('valid', true)
+            ->setParameter('an', $annonce)
+            ->andWhere('t.profil = p.id')
+            ->getQuery()
+            ->getResult();
+    }
 
     public function findByProfil($profil)
     {
@@ -92,14 +113,25 @@ class TrtCandidatureRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    public function findEmailUser($value)
+    public function findEmailUserBycandidature($candidature)
     {
         return $this->createQueryBuilder('t')
-        ->from(TrtProfilcandidat::class, 'p')
-        ->from(TrtUser::class, 'u')
-        ->from(TrtAnnonce::class, 'a')
-        ->Where('t.annonce = a.id')
-        ->andWhere('a.recruteur= p.id')
-        ->andWhere('p.iduser= u.id')
+            ->from(TrtProfilrecruteur::class, 'p')
+            ->from(TrtUser::class, 'u')
+            ->from(TrtAnnonce::class, 'a')
+            ->from(TrtProfessions::class, 'm')
+            ->from(TrtContrat::class, 'c')
+            ->from(TrtExperiences::class, 'e')
+            ->select('t.id, p.nom as recruteur ,m.titre as profession, u.email, c.titre as contrat, e.titre as experience ')
+            ->Where('t.id = :candidature')
+            ->setParameter('candidature', $candidature)
+            ->andWhere('a.profession = m.id')
+            ->andWhere('a.contrat = c.id')
+            ->andWhere('t.annonce = a.id')
+            ->andWhere('a.recruteur = p.id')
+            ->andWhere('a.experience = e.id')
+            ->andWhere('p.idUser = u.id')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

@@ -18,10 +18,11 @@ class EmploisController extends BddController
     public function index(): Response
     {
         $listeannonces = $this->reposAnnonce->findBy(['valider' => true]);
-
+        $profession = $this->reposProfession->findAll();
         return $this->render('emplois/emplois.html.twig', [
             'page' => 'emplois',
-            'liste' => $listeannonces
+            'liste' => $listeannonces,
+            'profession'=>$profession
         ]);
     }
 }

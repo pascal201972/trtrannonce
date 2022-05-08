@@ -6,6 +6,7 @@ use App\Repository\TrtUserRepository;
 use App\Repository\TrtAnnonceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\TrtCandidatureRepository;
+use App\Repository\TrtProfessionsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repository\TrtProfilcandidatRepository;
@@ -23,6 +24,8 @@ class BddController extends AbstractController
     public $reposAnnonce;
     public $reposCandidature;
     public $passwordEncoder;
+    public $reposProfession;
+   
 
 
 
@@ -34,7 +37,8 @@ class BddController extends AbstractController
         EntityManagerInterface $entityManager_,
         TrtAnnonceRepository $reposAnnonce_,
         TrtCandidatureRepository $repoCandidature_,
-        UserPasswordHasherInterface $passwordEncoder_
+        UserPasswordHasherInterface $passwordEncoder_,
+        TrtProfessionsRepository $reposprofession_
     ) {
         $this->reposUser = $reposUser_;
         $this->reposProfilCdt = $reposProfilCdt_;
@@ -43,6 +47,7 @@ class BddController extends AbstractController
         $this->entityManager = $entityManager_;
         $this->reposCandidature = $repoCandidature_;
         $this->passwordEncoder = $passwordEncoder_;
+        $this->reposProfession = $reposprofession_;
     }
     public function formprofil($route, $user, Request $request,  $formemail, $formMdp)
     {

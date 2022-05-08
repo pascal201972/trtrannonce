@@ -15,7 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AdminController extends BddController
 {
-     /**
+    /**
      *@Route("/admin/", name="app_admin")
      * IsGranted("ROLE_ADMIN")
      */
@@ -62,7 +62,7 @@ class AdminController extends BddController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setRoles(['ROLE_CONSULTANT']);
+            $user->setRoles('ROLE_CONSULTANT');
 
             $user->setValider(1);
             $user->setProfil(0);
@@ -74,7 +74,7 @@ class AdminController extends BddController
             $subject = "Vous ête consultant";
             $template = 'templateEmail/email_consultant.html.twig';
             $context = [""];
-            $envoieEmail->SendEmail($user->getEmail(), $subject, $template, $context);
+            $envoieEmail->SendEmailSimple($user->getEmail(), $subject, $template);
             return $this->redirectToRoute('app_admin_consultant');
         }
         $listeConsultant = $this->getUserRole('ROLE_CONSULTANT');
@@ -83,6 +83,29 @@ class AdminController extends BddController
         return $this->render('admin/admin.html.twig', [
             'page' => 'administration',
             'formconsultant' => $form->createView(),
+            'fiche' => false,
+            'liste' => $listeConsultant,
+            'onglet' => 'consultant'
+        ]);
+    }
+    /**    
+     *   @Route("/admin/consultant/supprimer/{id}", name="app_admin_consultant_supprimer")
+     * @Route("/admin/consultant/supprimer/{confirmer}/{id}", name="app_admin_consultant_supprimer_confirmer")
+     * IsGranted("ROLE_ADMIN")
+     */
+    public function supprimerConsultant($id, $confirmer = null)
+    {
+        $listeConsultant = $this->getUserRole('ROLE_CONSULTANT');
+        $fiche = $this->reposUser->findOneByRoleAndId($id, 'ROLE_CONSULTANT');
+        if ($confirmer == 'confirmer') {
+            $this->entityManager->remove($fiche);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('app_admin_consultant');
+        }
+        return $this->render('admin/admin.html.twig', [
+            'page' => 'administration',
+            'ficheconsultant' => $fiche,
+            'fiche' => true,
             'liste' => $listeConsultant,
             'onglet' => 'consultant'
         ]);

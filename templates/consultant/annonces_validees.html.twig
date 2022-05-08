@@ -24,7 +24,7 @@
                     class="btn btn-secondary">Supprimer la validation</a>
 
                 {% else %}
-                <strong>Cette annonce possède des candidats</strong>
+                <strong class="color-alert">Cette annonce possède des candidats</strong>
                 {% endif %}
                 {% include 'svg/svg_valider_check.html.twig' %}
             </div>
@@ -45,8 +45,7 @@
                         <span class="col-xl-3">{{cdt.pro}},</span>
                         <span class="col-xl-3">{{cdt.exp}}</span>
                         <span class="col-12 col-xl-2">
-                            <a href="{{asset('./uploads/cv/'~ cdt.cv)}}" target="_blank" title="voir le cv"> {% include
-                                'svg/svg_pdf.html.twig' %}</a>
+                            <a href="{{asset('./uploads/cv/'~ cdt.cv)}}" target="_blank" title="voir le cv"> {% include 'svg/svg_pdf.html.twig' %}</a>
                         </span>
 
                     </span>
@@ -63,7 +62,9 @@
                     </span>
 
                     {% else %}
-                    <span class="valider col-12 col-xl-6">Ce candidat a été retenue pour cette annonce</span>
+                    <span class="valider col-12 col-xl-6 color-alert">
+                        Ce candidat a été retenue pour cette annonce
+                    </span>
                     <span class="col-12 col-xl-6"><a
                             href="{{path('app_consultant_annonce_candidature_supprimer_validation',{'id':cdt.id})}}"
                             class="btn btn-secondary">Supprimer la validation</a>

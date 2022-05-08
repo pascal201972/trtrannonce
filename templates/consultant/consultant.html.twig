@@ -7,11 +7,11 @@
 
 {% block wrapper %}
 
-<div class="container-fluid consultant">
+<div class="container-fluid consultant wrapper">
     <h1 class="bg-color">Bienvenue dans votre espace consultant</h1>
     {% if onglet == 'candidat' and fiche == true %} {% include 'consultant/fiche_candidat.html.twig'%}{% endif %}
     {% if onglet == 'recruteur' and fiche == true %} {% include 'consultant/fiche_recruteur.html.twig'%}{% endif %}
-    {% if onglet == 'annonce' and fiche == true %} 
+    {% if onglet == 'annonce' and fiche == true %}
     {% set ficheliste = false %}
     {% include 'consultant/fiche_annonce.html.twig'%}{% endif %}
     <ul class="nav nav-tabs">

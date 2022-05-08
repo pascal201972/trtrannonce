@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\TrtUser;
 use App\Services\EnvoieEmail;
 use App\Entity\TrtInitpassword;
 use App\Form\ResetPassEmailType;
@@ -35,34 +36,28 @@ class ResetPasswordController extends AbstractController
                 // On retourne sur la page de connexion
                 return $this->redirectToRoute('app_reset_email');
             } else {
-                $repoPassword = $this->getDoctrine()->getRepository(TrtInitpassword::class);
-                $inits = $repoPassword->findBy(['user' => $user]);
 
-                foreach ($inits as $init) {
-                    $entityManager->remove($init);
-                    $entityManager->flush();
-                }
+
                 $token = $tokenGenerator->generateToken();
                 try {
 
                     $time = time() + 3600;
-                    $initpassword = new TrtInitpassword();
-                    $initpassword->setToken($token);
-                    $initpassword->setUser($user);
-                    $initpassword->setExpire($time);
 
-                    $entityManager->persist($initpassword);
+                    $user->setInitMotdepasse($token);
+                    $user->setExpire($time);
+
+                    $entityManager->persist($user);
                     $entityManager->flush();
                 } catch (\Exception $e) {
                     $this->addFlash('ErreurEmail', "une erreur s'est produite: recommencer");
                     return $this->redirectToRoute('app_reset_email');
                 }
 
-                $id = $this->getDoctrine()->getRepository(TrtInitpassword::class)->findOneBy(['token' => $token])->getId();
+
 
                 $subject = "Réinitialisation de votre mot de passe";
                 $template = 'templateEmail/email_init_password.html.twig';
-                $context = ['id' => $id, 'token' => $token];
+                $context = ['token' => $token];
                 $envoieEmail->SendEmail($email, $subject, $template, $context);
                 $this->addFlash('successEmail', "Un email vient de vous être envoyé.");
                 return $this->redirectToRoute('app_reset_email');
@@ -73,34 +68,35 @@ class ResetPasswordController extends AbstractController
 
 
     /** 
-     * @Route("/reset/new/password/{id}/{token}", name= "app_new_password")
+     * @Route("/reset/new/password/{token}", name= "app_new_password")
      * 
      */
-    public function nouveauPassword($id, $token, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
+    public function nouveauPassword($token, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager)
     {
         $form = $this->createForm(FormInitpasswordType::class);
 
-        $initMDP = $this->getDoctrine()->getRepository(TrtInitpassword::class)->findOneBy(['id' => $id]);
+        $userInit = $this->getDoctrine()->getRepository(TrtUser::class)->findOneBy(['initMotdepasse' => $token]);
 
-        if (!$initMDP || $initMDP->getToken() != $token || time() > $initMDP->getExpire()) {
+        if (!$userInit  || $userInit->getInitMotdepasse() != $token || time() > $userInit->getExpire()) {
 
             $this->addFlash('messageErreur', "une erreur s'est produite, le lien n'est plus valable recommencer");
             return $this->redirectToRoute('app_erreurs');
         }
-        $user = $initMDP->getUser();
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $user->setPassword(
+            $userInit->setPassword(
                 $userPasswordHasher->hashPassword(
-                    $user,
+                    $userInit,
                     $form->get('plainPassword')->getData()
                 )
             );
 
-            $entityManager->persist($user);
+            $entityManager->persist($userInit);
             $entityManager->flush();
             $this->addFlash('successpasswod', "votre mot de pass a été modifier");
+
             return $this->redirectToRoute('app_login');
         }
         return $this->render('reset_password/new_password.html.twig', ['formInitpassword' => $form->createView()]);

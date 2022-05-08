@@ -42,13 +42,13 @@ class RegistrationController extends AbstractController
                 )
             );
             if ($type == 'recruteur') {
-                $user->setRoles(['ROLE_RECRUTEUR']);
+                $user->setRoles('ROLE_RECRUTEUR');
                 $profil = new TrtProfilrecruteur();
             } else {
-                $user->setRoles(['ROLE_CANDIDAT']);
+                $user->setRoles('ROLE_CANDIDAT');
                 $profil = new TrtProfilcandidat();
             }
-
+            $profil->setNumero(uniqid());
             $user->setValider(0);
             $user->setProfil(0);
             $entityManager->persist($user);

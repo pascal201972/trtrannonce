@@ -1,6 +1,6 @@
-$colorbleuciel:#33cccc;
-$colorGris:#555;
-$colorGrisClaire:#999;
+$colorbleuciel: #33cccc;
+$colorGris: #555;
+$colorGrisClaire: #999;
 
 /* Color Theme Swatches in Hex */
 $ColorVertFonce: #012E40;
@@ -8,11 +8,11 @@ $ColorVertFonce: #012E40;
 $ColorVertEmpire: #025159;
 $ColorVertCanard: #038C8C;
 $ColorVertPoireau: #03A696;
-$ColorVertMenthe:#408e4e;
-$ColorVertPelouse:#72981e;
-$ColorVertFlash:#52a32f;
-$ColorOrange:#F28705;
-$ColorAdmin:#146551;
+$ColorVertMenthe: #408e4e;
+$ColorVertPelouse: #72981e;
+$ColorVertFlash: #52a32f;
+$ColorOrange: #F28705;
+$ColorAdmin: #146551;
 
 /* Color Theme Swatches in RGBA */
 
@@ -52,11 +52,12 @@ $ColorAdmin:#146551;
     @return rgba(82, 163, 47, $coef);
 }
 
-$bgMenu:$ColorVertEmpire;
-$colorMenu:$colorGrisClaire;
+$bgMenu: $ColorVertEmpire;
+$colorMenu: $colorGrisClaire;
 
 .color-alert {
     color: $ColorOrange;
+    // -webkit-text-stroke: 0.35px #000;
 }
 
 .bg-alert {
@@ -66,16 +67,18 @@ $colorMenu:$colorGrisClaire;
 .color-link {
     color: $ColorVertEmpire;
 
+
     &:hover {
         color: $colorGrisClaire;
     }
 }
 
+
 $colorAdmin: candidat $ColorVertPoireau ColorVertPoireauRgba(0.3) ColorVertPoireauRgba(0.7),
-recruteur $ColorVertMenthe ColorVertMentheRgba(0.3) ColorVertMentheRgba(0.7),
-consultant $ColorVertCanard ColorVertCanardRgba(0.3) ColorVertCanardRgba(0.7),
-admin $ColorAdmin ColorAdminRgba(0.3) ColorAdminRgba(0.7),
-annonce $ColorVertFlash ColorVertFlashRgba(0.3) ColorVertFlashRgba(0.7);
+    recruteur $ColorVertMenthe ColorVertMentheRgba(0.3) ColorVertMentheRgba(0.7),
+    consultant $ColorVertCanard ColorVertCanardRgba(0.3) ColorVertCanardRgba(0.7),
+    admin $ColorAdmin ColorAdminRgba(0.3) ColorAdminRgba(0.7),
+    annonce $ColorVertFlash ColorVertFlashRgba(0.3) ColorVertFlashRgba(0.7);
 
 
 @each $nom,
@@ -143,11 +146,22 @@ $rgba7 in $colorAdmin {
         }
 
         div.tbody {
-            ul.paire {
+
+            ul.paire,
+            div.paire {
                 background-color: $rgba7;
             }
 
-            ul.impaire {
+            ul.impaire,
+            div.impaire {
+                background-color: $rgba;
+            }
+
+            li.paire {
+                background-color: $rgba7;
+            }
+
+            li.impaire {
                 background-color: $rgba;
             }
 
