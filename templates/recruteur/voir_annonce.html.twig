@@ -1,0 +1,53 @@
+<div class="card fiche annonce alert-dismissible mb-3">
+    <div class="card-header bg-color">Annonce référence:{{annonce.ref }}<a class="btn btn-close "
+            href="{{path('app_recruteur_annonce')}}"></a>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xxl-12">
+                <h3 class="">
+                    <span><strong>{{annonce.recruteur.etablissement}}:</strong></span>
+                    {{annonce.recruteur.nom}}, {{annonce.recruteur.codePostal}},
+                    {{annonce.recruteur.ville}}
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xxl-5"><span><strong>Profession:</strong> {{annonce.Profession.titre}}</span>
+
+            </div>
+            <div class="col-xxl-4"><span><strong>Contrat: </strong></span>
+                {{annonce.Contrat.titre}}
+            </div>
+            <div class="col-xxl-3"><span><strong>Experience :</strong></span>{{annonce.Experience.titre}}</div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-xxl-5"><span><strong>Salaire Annuelle:</strong></span>{{annonce.salaireAnnuel}}€ annuelle
+            </div>
+            <div class="col-xxl-4"><strong>Horaire:</strong>{{annonce.horaire}}</div>
+
+            <div class="col-xxl-3"><span><strong>etat: </strong></span>{{annonce.etat.titre}}</div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12 description"><span><strong>Description: </strong></span>{{annonce.description|raw}}</div>
+
+        </div>
+        <div class="col-xxl-12 action">
+            <strong class="color-alert">
+                {% if annonce.valider == false %}
+
+                l'annonce est en attente de validation.
+
+                {% else %}
+                Annonce valider
+                {% endif %}
+            </strong>
+        </div>
+
+    </div>
+</div>

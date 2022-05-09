@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use App\Repository\TrtEtatAnnonceRepository;
 use App\Repository\TrtExperiencesRepository;
 use App\Repository\TrtProfessionsRepository;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -48,7 +49,7 @@ class FormAnnonceType extends AbstractType
             $choixEtats[$et->getTitre()] = $et;
         }
         $builder
-            ->add('description')
+            ->add('description',CKEditorType::class)
             ->add('horaire')
             ->add('salaireAnnuel')
             ->add('profession', ChoiceType::class, [

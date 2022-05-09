@@ -27,6 +27,19 @@ h1 {
     min-height: 200px;
 }
 
+.administration .description {
+    li {
+        list-style: inherit !important;
+    }
+
+    p,
+    li {
+        text-align: left;
+        font-size: 21px !important;
+    }
+
+}
+
 .boutons {
     display: inline-block;
     position: relative;

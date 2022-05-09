@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}contact!{% endblock %}
+
+{% block wrapper %}
+<div class="container wrapper">
+    {% for message in app.flashes('successcontact') %}
+    <div class="alert alert-success" role="alert">{{ message}}</div>
+    {% endfor %}
+    <h2>Contactez nous</h2>
+    {{ form_start(formcontact) }}
+    {{ form_row(formcontact.nom,{'attr': {'class': 'form-control','placeholder':'Nom'}}) }}
+
+    {{ form_row(formcontact.email,{'attr': {'class': 'form-control','placeholder':'Email'}}) }}
+    {{ form_row(formcontact.sujet,{'attr': {'class': 'form-control','placeholder':'le sujet'}}) }}
+    {{ form_row(formcontact.message,{'attr': {'class': 'form-control'}}) }}
+
+    </br>
+    <p><button type="submit" class="btn btn-primary">Envoyer</button></p>
+    {{ form_end(formcontact) }}
+</div>
+
+{% endblock %}

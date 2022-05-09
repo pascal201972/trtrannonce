@@ -193,12 +193,14 @@ class RecruteurController extends BddController
     public function setAction($action, $annonce, $profil)
     {
         if ($action == 'ajouter') {
-            $ref = 'ann100' . $annonce->getId();
+            $ref = 'ann' . time();
             $annonce->setRef($ref);
+            $annonce->setValider(0);
             $profil->addAnnonce($annonce);
+            $annonce->setValider(0);
         }
         $annonce->setRecruteur($profil);
-        $annonce->setValider(0);
+
         $complet = $this->isAnnonceComplet($annonce);
         $annonce->setComplet($complet);
         $this->entityManager->persist($annonce);
@@ -273,6 +275,7 @@ class RecruteurController extends BddController
             case 'voir':
 
                 $parametres['annonce'] = $annonce;
+                $this->setAction($action, $annonce, $profilRecruteur);
                 break;
         }
 

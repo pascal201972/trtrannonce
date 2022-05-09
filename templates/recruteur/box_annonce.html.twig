@@ -1,0 +1,13 @@
+<div class="card fiche annonce alert-dismissible mb-3">
+    <div class="card-header bg-color"><a class="btn btn-close  " href="{{path('app_recruteur_annonce')}}"></a>
+    </div>
+
+    <div class="card-body">
+        {% if box == 'formulaire' %}
+        {% include 'recruteur/formulaire_annonce.html.twig'%}
+        {% endif %}
+        {% if box == 'suppression' %}
+        {% include 'recruteur/suppression_annonce.html.twig'%}
+        {% endif %}
+    </div>
+</div>

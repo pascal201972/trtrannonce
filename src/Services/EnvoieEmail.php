@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
+use Symfony\Component\Mime\Email;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mailer\MailerInterface;
 
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -34,6 +35,19 @@ class EnvoieEmail
             ->to($email)
             ->subject($subject)
             ->htmlTemplate($template);
+
+
+        $this->mailer->send($contentemail);
+    }
+
+
+    public function SendEmailContact($from,$to, $subject, $message)
+    {
+        $contentemail = (new Email())
+            ->from($from)
+            ->to($to)
+            ->subject($subject)
+            ->text('Sender : '.$from.\PHP_EOL.$message,'text/plain');
 
 
         $this->mailer->send($contentemail);
