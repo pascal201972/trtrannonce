@@ -6,11 +6,11 @@
 
         <div class="row">
 
-            <p class="col-xxl-12">
-                <strong>
-                    {{annonce.recruteur.etablissement}}/{{annonce.recruteur.nom}}
-                </strong>
-            </p>
+            <p class="col-xxl-6"><strong>Lieu: </strong>
+                {{annonce.recruteur.etablissement}}/{{annonce.recruteur.nom}}</p>
+            <p class="col-xxl-6">
+                {{annonce.recruteur.codePostal}}/{{annonce.recruteur.ville}}</p>
+
         </div>
         <div class="row ">
             <div class="col-xxl-6">
@@ -31,7 +31,7 @@
         </div>
 
 
-        <p class="col-12"><span><strong>Description: </strong></span>{{annonce.description}}</p>
+        <p class="col-12"><span><strong>Description: </strong></span>{{annonce.description|raw}}</p>
 
         {% if annonce.valider == false %}
         <div class="col-xxl-12 action"><a href="{{path('app_consultant_annonce_validation',{'id':annonce.id})}}"

@@ -1,0 +1,47 @@
+<div class="card fiche annonce alert-dismissible mb-3">
+    <div class="card-header bg-color">annonce publier le: {{annonce.date|date("d/m/Y")}}<a class="btn btn-close  "
+            href="{{path('app_consultant_annonce',{'valider':valider})}}"></a>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <p class="col-xxl-6"><strong>Lieu: </strong>
+                {{annonce.recruteur.etablissement}}/{{annonce.recruteur.nom}}</p>
+            <p class="col-xxl-6">
+                {{annonce.recruteur.codePostal}}/{{annonce.recruteur.ville}}</p>
+
+        </div>
+        <div class="row ">
+            <div class="col-xxl-6">
+                <p class="col-xxl-12"> Nous recherchons:
+                    <strong>{{annonce.Profession.titre}}</strong> pour un <strong>{{annonce.Contrat.titre}}</strong>
+                </p>
+                <p class="col-xxl-12">Experience :<strong>{{annonce.Experience.titre}}</strong></p>
+            </div>
+
+
+            <div class="col-xxl-6">
+
+                <p class="col-xxl-8">Salaire Annuelle/Horaire :
+                    {{annonce.salaireAnnuel}} € annuelle /{{annonce.horaire}}</p>
+                <p class="col-xxl-4"><span><strong>etat: </strong></span>{{annonce.etat.titre}}</p>
+            </div>
+
+        </div>
+
+
+        <p class="col-12"><span><strong>Description: </strong></span>{{annonce.description|raw}}</p>
+
+        {% if annonce.valider == false %}
+        <div class="col-xxl-12 action"><a href="{{path('app_consultant_annonce_validation',{'id':annonce.id})}}"
+                class="btn btn-primary">Valider</a>
+        </div>
+        {% else %}
+        <div class="col-xxl-12 action"><strong>Annonce valider</strong></div>
+        {% endif %}
+
+
+    </div>
+</div>

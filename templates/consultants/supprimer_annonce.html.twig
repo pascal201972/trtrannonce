@@ -1,0 +1,20 @@
+<div class="card fiche annonce alert-dismissible mb-3">
+    <div class="card-header bg-color">Suppression<a class="btn btn-close  "
+            href="{{path('app_consultant_annonce')}}"></a>
+    </div>
+
+    <div class="card-body">
+
+
+        <p class="color-alert bg-alert ft-34"><strong>Confirmer la suppression!!</strong></p>
+        <ul class="color-alert bg-alert ft-30">
+            <li><strong>ref:</strong>{{annonce.ref}}</li>
+            <li><span><strong>Etablissement/Recruteur:
+                    </strong></span>{{annonce.recruteur.etablissement}}/{{annonce.recruteur.nom}}</li>
+            <li><span><strong>Profession:</strong></span>{{annonce.Profession.titre}}</li>
+            <li><span><strong>Contrat: </strong></span>{{annonce.Contrat.titre}}</li>
+        </ul>
+        <a href="{{path('app_consultant_annonce_supprimer_confirmer',{'id':annonce.id})}}"
+            class="btn btn-secondary">Suppression</a>
+    </div>
+</div

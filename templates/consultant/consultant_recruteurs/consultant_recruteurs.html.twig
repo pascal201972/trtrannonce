@@ -1,0 +1,20 @@
+{% extends 'consultant/base_consultant.html.twig' %}
+
+{% block title %}consultant:liste candidats{% endblock %}
+
+
+{% block contentconsultant %}
+<div class="liste recruteur">
+    {% if fiche == true %} {% include 'consultant/consultant_recruteurs/fiche_recruteur.html.twig'%}{% endif %}
+    {% if suppression == true %}
+    {% include 'consultant/supprimer_profil.html.twig' %}
+    {% endif %}
+    {% if valider == 'valider' %}
+    {% include 'consultant/consultant_recruteurs/liste_recruteur_valides.html.twig'%}
+
+    {% endif %}
+    {% if valider == 'nonvalider' %}
+    {% include 'consultant/consultant_recruteurs/liste_recruteur_non_valides.html.twig'%}
+    {% endif %}
+</div>
+{% endblock %}

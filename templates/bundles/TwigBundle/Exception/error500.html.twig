@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% block title %}Page non trouvée {% endblock %}
+{% block wrapper %}
+<div class="container wrapper">
+    <h1>Aaaaaie!</h1>
+    <h3><strong>Une erreur c'est produite. recommencer! ou contacter le webmaster pour signaler le problème</strong>
+    </h3>
+    <h4>code erreur {{status_code}}</h4>
+    <div class="col-xxl-6"><img style="width:100%;" src="{{asset('build/images/aie.jpg')}}"></div>
+
+</div>
+
+{% endblock %}

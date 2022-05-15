@@ -1,9 +1,12 @@
 <div class="row">
-    <div class="col-xxl-12"><span><strong>Etablissement/Recruteur:</strong></span>
+    <div class="col-xxl-6">
         <h3 class="">
-            {{annonce.recruteur.etablissement}}/{{annonce.recruteur.nom}},{{annonce.recruteur.codePostal}},{{annonce.recruteur.ville}},<strong></strong>
+            {{annonce.recruteur.etablissement}}:{{annonce.recruteur.nom}}, {{annonce.recruteur.codePostal}},
+            {{annonce.recruteur.ville}}<strong></strong>
         </h3>
     </div>
+    <div class="col-xxl-4"></div>
+    <div class="col-xxl-2"><strong>Ref:</strong>{{annonce.ref}}</div>
 </div>
 <div class="row">
     <div class="col-xxl-3"><span><strong>Profession:</strong></span>
@@ -24,14 +27,17 @@
 
 <div class="row">
 
-    <div class="col-12"><span><strong>Description: </strong></span>{{annonce.description}}</div>
+    <div class="col-12"><span><strong>Description: </strong></span>{{annonce.description|raw}}</div>
 
 </div>
-{% if annonce.valider == false %}
-<div class="col-xxl-12 action"><a href="{{path('app_consultant_annonce_validation',{'id':annonce.id})}}"
-        class="btn btn-primary">Valider</a>
+<div class="row">
+    {% if annonce.valider == false %}
+    <div class="col-xxl-12 action"><a href="{{path('app_consultant_annonce_validation',{'id':annonce.id})}}"
+            class="btn btn-primary">Valider</a>
+    </div>
+    {% else %}
+    <div class="col-xxl-12 action"><strong>Annonce valider</strong></div>
+    {% endif %}
+
 </div>
-{% else %}
-<div class="col-xxl-12 action"><strong>Annonce valider</strong></div>
-{% endif %}
 {% endif %}

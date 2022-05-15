@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-xxl-6">
+        <h4 class="">
+            {{annonce.recruteur.etablissement}}:{{annonce.recruteur.nom}}, {{annonce.recruteur.codePostal}},
+            {{annonce.recruteur.ville}}<strong></strong>
+        </h4>
+    </div>
+    <div class="col-xxl-3"></div>
+    <div class="col-xxl-3"><strong>Ref:</strong>{{annonce.ref}}, Publier le :{{annonce.date|date("d/m/Y")}}</div>
+</div>
+<div class="row">
+    <div class="col-xxl-3"><span><strong>Profession:</strong></span>
+        <h4>{{annonce.Profession.titre}}</h4>
+    </div>
+    <div class="col-xxl-3"><span><strong>Contrat: </strong></span>
+        <strong>{{annonce.Contrat.titre}}</strong>
+    </div>
+    <div class="col-xxl-5"><span><strong>Experience :</strong></span>{{annonce.Experience.titre}}</div>
+</div>
+{% if fiche == true and ficheliste == false %}
+
+
+<div class="row">
+    {% if annonce.valider == false %}
+    <div class="col-xxl-12 action"><a href="{{path('app_consultant_annonce_validation',{'id':annonce.id})}}"
+            class="btn btn-primary">Valider</a>
+    </div>
+    {% else %}
+    <div class="col-xxl-12 action"><strong>Annonce valider</strong></div>
+    {% endif %}
+
+</div>
+{% endif %}

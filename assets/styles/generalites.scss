@@ -37,7 +37,11 @@ a {
 }
 
 .bg-primary {
-    background-color: $ColorVertEmpire !important;
+    background-color: $ColorVertEmpire  !important;
+}
+
+.navbar-nav .nav-item {
+    min-width: 150px;
 }
 
 .navbar-dark .navbar-brand,
@@ -64,10 +68,11 @@ a {
 .dropdown-menu {
 
     a {
-        color: $ColorOrange;
+        color: $colorGrisClaire;
 
         &:hover {
-            background-color: $ColorVertEmpire;
+            background-color: $ColorOrange;
+
         }
     }
 }

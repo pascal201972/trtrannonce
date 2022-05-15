@@ -25,7 +25,7 @@ class BddController extends AbstractController
     public $reposCandidature;
     public $passwordEncoder;
     public $reposProfession;
-   
+
 
 
 
@@ -89,7 +89,19 @@ class BddController extends AbstractController
         return $userRoles;
     }
 
+    public function getUserByRoleAndEtat($role, $etat)
+    {
+        $userRoles = array();
+        $listeuser = $this->reposUser->findAll();
+        foreach ($listeuser as $user) {
+            $roles = $user->getRoles();
 
+            if ($roles[0] == $role) {
+                $userRoles[] = $user;
+            }
+        }
+        return $userRoles;
+    }
     public function isProfilComplet($user)
     {
         $roles = $user->getRoles();
@@ -132,5 +144,197 @@ class BddController extends AbstractController
         else $annonce->setComplet(false);
         $this->entityManager->persist($annonce);
         $this->entityManager->flush();
+    }
+
+    public function getListeCandidature($user)
+    {
+
+        $profiluser = $this->reposProfilCdt->findOneByUser($user);
+
+
+        return   $this->reposCandidature->findBy(['profil' => $profiluser->getId()]);
+    }
+
+    public function getProfilUser($userprofil)
+    {
+        $roles = $userprofil->getRoles();
+        $role = $roles[0];
+        $profiles = explode('_', $role);
+        return   $profil = strtolower($profiles[1]);
+    }
+
+    public function getListeAnnonceRecruteur($user)
+    {
+        $profiluser = $this->reposProfilRecruteur->findOneByUser($user);
+        return $this->reposAnnonce->findBy(['recruteur' => $profiluser]);
+    }
+
+    public function getProfilByUser($user)
+    {
+
+        if ($user) {
+            $profilname = $this->getProfilUser($user);
+            if (!$user->getValider()) {
+                if ($profilname == 'candidat') {
+                    return $profiluser = $user->getTrtProfilcandidat();
+                }
+
+                if ($profilname == 'recruteur') {
+                    return  $profiluser = $user->getTrtProfilrecruteur();
+                }
+            }
+        }
+    }
+
+
+    public  function getListe($id = null, $profilrole, $onglet, $valider)
+    {
+        $valid = $this->getParametreValid($valider);
+        $userprofil = null;
+        $fiche = false;
+        $profilname = "";
+        if ($id != null) {
+            $userprofil = $this->reposUser->findOneBy(["id" => $id]);
+
+            $profilname = $this->getProfilUser($userprofil);
+            switch ($profilname) {
+                case 'candidat':
+                    $ficheprofil = $this->reposProfilCdt->findOneBy(['idUser' => $userprofil]);
+                    break;
+                case 'recruteur':
+                    $ficheprofil = $this->reposProfilRecruteur->findOneBy(['idUser' => $userprofil]);
+                    break;
+            }
+            $fiche = true;
+        } else  $ficheprofil = array();
+
+
+        $listes = $this->reposUser->findUserByRoleAndEtat($profilrole, $valid);
+
+        $candidature = array();
+        if ($valid == true) {
+            foreach ($listes as $u) {
+                $profilname = $this->getProfilUser($u);
+                switch ($profilname) {
+                    case 'candidat':
+
+                        if ($this->getListeCandidature($u)) {
+                            $candidature[$u->getId()] = true;
+                        } else  $candidature[$u->getId()] = false;
+                        break;
+                    case 'recruteur':
+                        if ($this->getListeAnnonceRecruteur($u)) {
+                            $candidature[$u->getId()] = true;
+                        } else  $candidature[$u->getId()] = false;
+                        break;
+                }
+            }
+        }
+
+
+        return $parametres = [
+            'page' => 'administration',
+            'onglet' => $onglet,
+            'listes' => $listes,
+            'userprofil' => $ficheprofil,
+            'profil' => $profilname,
+            'fiche' => $fiche,
+            'valider' => $valider,
+            'candidature' => $candidature,
+            'suppression' => false
+
+        ];
+    }
+
+
+    public function btn_validation($user, $etat)
+    {
+
+
+        $profil = $this->getProfilUser($user);
+
+        if ($this->setProfilComplet($profil, $user)) {
+            $user->setValider($etat);
+        } else $user->setValider(false);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+        return $profil;
+    }
+
+
+    public function getannonce($fiche, $valider)
+    {
+        $valid = $this->getParametreValid($valider);
+        $listeAnn = $this->reposAnnonce->findBy(['valider' => $valid]);
+        $listeAnnonces = array();
+        $liste = array();
+        $listecandidat = array();
+
+        if ($valid == true) {
+            foreach ($listeAnn as $annonce) {
+                $liste['annonce'] = $annonce;
+                $listecandidat[$annonce->getId()] = array();
+                $candidat = $this->reposCandidature->findProfilcandidatureByAnnonce($annonce->getId());
+
+                $listecandidat[$annonce->getId()] = $candidat;
+
+                $listeAnnonces[] = $liste;
+            }
+        } else {
+            $listeAnnonces =  $listeAnn;
+        }
+
+        $parametre = [
+            'onglet' => 'annonce',
+            'fiche' => $fiche,
+            'listeannonces' => $listeAnnonces,
+            'valid' => $valid,
+            'valider' => $valider,
+            'listeCandidat' => $listecandidat,
+            'suppression' => false,
+            'ficheliste' => false
+        ];
+        return $parametre;
+    }
+
+    public function getParametreValid($valid)
+    {
+
+
+        if ($valid == 'valider') return true;
+        else return false;
+    }
+
+
+
+    public function Confirmersupprimerprofil($id)
+    {
+        $user = $this->reposUser->findOneBy(['id' => $id]);
+        $profilname = $this->getProfilUser($user);
+        if ($user) {
+            if (!$user->getValider()) {
+                if ($profilname == 'candidat') {
+                    $profiluser = $user->getTrtProfilcandidat();
+                    $candidature = $this->reposCandidature->findBy(['profil' => $profiluser->getId()]);
+                    foreach ($candidature as $cdt) {
+                        $this->entityManager->remove($cdt);
+                    }
+                    $this->entityManager->flush();
+                }
+
+                if ($profilname == 'recruteur') {
+                    $profiluser = $user->getTrtProfilrecruteur();
+                    $annonces = $this->reposAnnonce->findBy(['recruteur' => $profiluser]);
+                    foreach ($annonces as $ann) {
+                        $this->entityManager->remove($ann);
+                    }
+                    $this->entityManager->flush();
+                }
+
+                $this->entityManager->remove($profiluser);
+                $this->entityManager->remove($user);
+                $this->entityManager->flush();
+            }
+        }
     }
 }

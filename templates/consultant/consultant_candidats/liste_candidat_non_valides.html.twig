@@ -1,0 +1,58 @@
+<h4 id="idnonvalid">Candidat non validés </h4>
+<div class="tbody" id="novalid">
+    {% set index = 0 %}
+    {% for candidat in listes %}
+
+    {% if candidat.valider == 0 %}
+    {% set index = index + 1 %}
+    <article class="novalid   {% if  index % 2 == 0  %} impaire {% else %} paire {% endif %}">
+
+        <div class="row">
+            {% if candidat.profil == true %}
+            <div class="col-xl-2">
+                <span><strong>Nom:</strong></span><strong>{{candidat.trtProfilcandidat.nom}}</strong>
+            </div>
+            <div class="col-xl-2"><span><strong>Prenom:</strong></span>{{candidat.trtProfilcandidat.prenom}}
+            </div>
+            <div class="col-xl-2 prof">
+                <span><strong>profession:</strong></span>{{candidat.trtProfilcandidat.profession.titre }}
+            </div>
+
+            <div class="col-xl-2"><span><strong>CV:</strong></span>
+                <a class="cv" href="{{asset('./uploads/cv/'~ candidat.trtProfilcandidat.cv)}} " target="_blank">
+                    {% include 'svg/svg_cv.html.twig' %}<strong>CV</strong>
+                </a>
+            </div>
+            {% else %}
+            <div class="col-xl-8"><strong>Profil imcomplet</strong></div>
+            {% endif %}
+            <div class="col-xl-4"><span><strong>Email:</strong></span>{{candidat.Email}}</div>
+
+
+            <div class="row">
+                {% if candidat.profil == true %}
+                <div class="col-xl-4 action"><span><strong>voir : </strong></span><a class="voir btn "
+                        href="{{path('app_consultant_voircandidat',{'id':candidat.id,'valider':'nonvalider'})}}">
+                        {% include 'svg/svg_voir.html.twig' %}
+                    </a>
+                </div>
+
+
+                <div class="col-xl-4 action"><a
+                        href="{{path('app_consultant_validation',{'id':candidat.id,'valider':'nonvalider'})}}"
+                        class="btn btn-primary ft-20">Valider</a>
+                </div>
+                {% else %}
+                <div class="col-xl-8"></div>
+                {% endif %}
+
+                <div class="col-xl-4 action">
+                    <a href="{{path('app_consultant_supprimer_candidat',{'id':candidat.id})}}" class="btn ">{%
+                        include 'svg/svg_supprimer.html.twig' %}</a>
+                </div>
+
+            </div>
+    </article>
+    {% endif %}
+    {% endfor %}
+</div>

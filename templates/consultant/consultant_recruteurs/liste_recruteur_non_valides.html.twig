@@ -1,0 +1,41 @@
+<h4 id="idnonvalid">Recruteurs non validées</h4>
+<div class="tbody" id="novalid">
+    {% set index = 0 %}
+    {% for recruteur in listes %}
+
+    {% if recruteur.valider == 0 %}
+    {% set index = index + 1 %}
+    <article class="novalid  {% if  index % 2 == 0  %} paire {% else %} impaire {% endif %} row">
+        {% include 'consultant/consultant_recruteurs/element_recruteur.html.twig' %}
+        <div class="row">
+            <div class="col-xl-6 action"><span><strong>voir:</strong></span><a class="voir btn"
+                    href="{{path('app_consultant_voirrecruteur',{'id':recruteur.id,'valider':'nonvalider'})}}">{%
+                    include
+                    'svg/svg_voir.html.twig' %}
+                </a>
+            </div>
+
+
+            <div class="col-xl-6 action">
+
+                <div class="col-xl-3">
+                    {% if recruteur.profil == true %}
+                    <a href="{{path('app_consultant_validation',{'id':recruteur.id})}}"
+                        class="btn btn-primary">Valider</a>
+                    {% else %}
+                    <strong>profil incomplet</strong>
+                    {% endif %}
+
+                </div>
+                <div class="col-xl-3">
+                    <a href="{{path('app_consultant_supprimer_recruteur',{'id':recruteur.id})}}" class="btn ">{%
+                        include 'svg/svg_supprimer.html.twig' %}</a>
+                </div>
+
+            </div>
+        </div>
+
+    </article>
+    {% endif %}
+    {% endfor %}
+</div>

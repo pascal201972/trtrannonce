@@ -1,13 +1,18 @@
 <br />
 <div class="container">
+
+
     {% include 'form_user.html.twig' %}
+
+
     <div class="validation">
         {% if app.user.valider == 0 %}
         <p class="color-alert bg-alert p-2">Alert! Votre inscription est en attente de validation par un
             <strong>consultant.</strong>
         </p>
         {% else %}
-        <p class="bg-succes align">Votre Profil a été validé par un consultant,vous pouvez ajouter des offres d'emplois.
+        <p class="bg-succes align">Votre Profil a été validé par un consultant,vous pouvez ajouter des offres
+            d'emplois.
             {% include
             'svg/svg_valider_check.html.twig'%} </p>
 
@@ -24,7 +29,8 @@
         {% endif %}
 
         {% if complet == false %}
-        <p class="color-alert bg-alert p-2">Alert! Ajouter vos <strong> Nom, etablissement , adresse, code postale et
+        <p class="color-alert bg-alert p-2">Alert! Ajouter vos <strong> Nom, etablissement , adresse, code postale
+                et
                 ville</strong></p>
 
 
@@ -42,7 +48,8 @@
                 '}}) }}
             </div>
             <div class="col-12 col-lg-6">
-                {{ form_row(formProfilRecruteur.codePostal,{'attr': {'class': 'form-control','placeholder':'code postal
+                {{ form_row(formProfilRecruteur.codePostal,{'attr': {'class': 'form-control','placeholder':'code
+                postal
                 '}}) }}
                 {{ form_row(formProfilRecruteur.ville,{'attr': {'class': 'form-control','placeholder':'Ville '}}) }}
                 <br />

@@ -126,7 +126,7 @@ h2.bg {
 
     p,
     div {
-        font-size: 28px;
+        font-size: 19px;
     }
 
 
@@ -157,7 +157,7 @@ h2.bg {
     article.novalid {
         div {
             margin: 5px 0;
-            font-size: 22px;
+            font-size: 18px;
         }
 
         div .btn.voir {
@@ -178,15 +178,15 @@ h2.bg {
     }
 
     .candidatures li {
-        font-size: 21px;
+        font-size: 18px;
 
         span.valider {
             background-color: #ccc;
         }
     }
 
-    h3#idnonvalid,
-    h3#idvalid {
+    h4#idnonvalid,
+    h4#idvalid {
         padding: 7px;
         background-color: #aaa;
     }

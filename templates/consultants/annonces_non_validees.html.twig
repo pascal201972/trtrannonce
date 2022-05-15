@@ -11,19 +11,25 @@
         {% include 'consultant/element_annonce.html.twig'%}
 
         <div class="row">
-            <div class="col-xxl-6 action"><span><strong>voir: </strong></span><a class="voir btn"
+            <div class="col-xxl-4 action"><span><strong>voir: </strong></span><a class="voir btn"
                     href="{{path('app_consultant_annonce_voir',{'id':annonce.id})}}">{% include
                     'svg/svg_voir.html.twig' %}
                 </a>
             </div>
 
             {% if annonce.complet == true %}
-            <div class="col-xxl-6 action"><a href="{{path('app_consultant_annonce_validation',{'id':annonce.id})}}"
+            <div class="col-xxl-4 action"><a href="{{path('app_consultant_annonce_validation',{'id':annonce.id})}}"
                     class="btn btn-primary">Valider</a>
             </div>
             {% else %}
-            <div class="col-xxl-6 action"><strong>Annonce incomplète</strong></div>
+            <div class="col-xxl-4 action"><strong>Annonce incomplète</strong></div>
             {% endif %}
+            <div class="col-xxl-4 action">
+                <a href="{{path('app_consultant_annonce_supprimer',{'id':annonce.id})}}">
+                    {% include 'svg/svg_supprimer.html.twig' %}
+
+                </a>
+            </div>
     </article>
     {% endfor %}
 </div>

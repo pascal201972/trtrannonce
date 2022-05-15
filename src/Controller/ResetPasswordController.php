@@ -95,7 +95,7 @@ class ResetPasswordController extends AbstractController
 
             $entityManager->persist($userInit);
             $entityManager->flush();
-            $this->addFlash('successpasswod', "votre mot de pass a été modifier");
+            $this->addFlash('successpasswod', "votre mot de passe a été modifié");
 
             return $this->redirectToRoute('app_login');
         }

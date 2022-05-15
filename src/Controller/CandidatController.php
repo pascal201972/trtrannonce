@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Form\FormCvType;
+use App\Form\MdpFormType;
 use App\Entity\TrtCandidature;
 use App\Form\FormProfilCandidatType;
+use App\Form\ResetPassEmailType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,14 +18,22 @@ class CandidatController extends BddController
 {
     /** 
      * @Route("/candidat/", name= "app_candidat")
+     *
+     * 
      * IsGranted('ROLE_CANDIDAT')
      */
     public function index(SluggerInterface $slugger, Request $request): Response
     {
+
         $user = $this->getUser();
+        $route = "app_candidat";
         if ($user->getTrtProfilcandidat())
             $profil = $this->reposProfilCdt->findOneByUser($user);
         $complet = $this->isProfilComplet($user);
+
+        $formemail = $this->createForm(ResetPassEmailType::class);
+        $formMdp = $this->createForm(MdpFormType::class);
+        $this->formprofil($route, $user, $request, $formemail, $formMdp);
 
         $formprofil = $this->createForm(FormProfilCandidatType::class, $profil);
         $formprofil->handleRequest($request);
@@ -66,13 +76,18 @@ class CandidatController extends BddController
             return $this->redirectToRoute('app_candidat');
         }
 
+
+
         return $this->render('candidat/candidat.html.twig', [
             'page' => 'administration',
             'onglet' => 'profil',
             'profil' => $profil,
             'formProfil' => $formprofil->createView(),
             'formcv' => $formCv->createView(),
-            'complet' => $complet
+            'complet' => $complet,
+            'formemail' => $formemail->createView(),
+            'formMdp' => $formMdp->createView(),
+
 
         ]);
     }
@@ -111,25 +126,27 @@ class CandidatController extends BddController
      */
     public function postuler($id = null, Request $request): Response
     {
-        if ($id != null) {
-            $user = $this->getUser();
-            $profil = $this->reposProfilCdt->findOneByUser($user);
-            if ($user->getValider()) {
-                //  $annonce = $this->reposAnnonce->findOneBy(['id' => $id]);
-                $candidatures = $this->reposCandidature->findByAnnonceAndProfil($id, $profil->getId());
-                if (!$candidatures) {
-                    $candidat = new TrtCandidature();
-                    $candidat->setAnnonce($id);
-                    $candidat->setValider(0);
-                    $candidat->setProfil($profil->getId());
-                    $this->entityManager->persist($candidat);
-                    $this->entityManager->flush();
-                }
+        if ($this->getUser()) {
+            if ($id != null) {
+                $user = $this->getUser();
+                $profil = $this->reposProfilCdt->findOneByUser($user);
+                if ($user->getValider()) {
+                    //  $annonce = $this->reposAnnonce->findOneBy(['id' => $id]);
+                    $candidatures = $this->reposCandidature->findByAnnonceAndProfil($id, $profil->getId());
+                    if (!$candidatures) {
+                        $candidat = new TrtCandidature();
+                        $candidat->setAnnonce($id);
+                        $candidat->setValider(0);
+                        $candidat->setProfil($profil->getId());
+                        $this->entityManager->persist($candidat);
+                        $this->entityManager->flush();
+                    }
 
 
-                return  $this->redirectToRoute('app_candidat_annonce');
+                    return  $this->redirectToRoute('app_candidat_annonce');
+                } else   return  $this->redirectToRoute('app_candidat');
             } else   return  $this->redirectToRoute('app_candidat');
-        } else   return  $this->redirectToRoute('app_candidat');
+        } else return $this->redirectToRoute('app_login');
     }
 
     /** 

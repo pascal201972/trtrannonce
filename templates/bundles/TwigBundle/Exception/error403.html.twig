@@ -1,0 +1,10 @@
+{% extends "base.html.twig" %}
+{% block title %}Page non trouvée {% endblock %}
+{% block wrapper %}
+<div class="container wrapper">
+    <h1>OUPS!</h1>
+    <h3><strong>Attention! vous ne pouvez pas accéder a cette page.</strong></h3>
+    <h4>code erreur {{status_code}}</h4>
+</div>
+
+{% endblock %}

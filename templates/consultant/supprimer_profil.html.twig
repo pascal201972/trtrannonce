@@ -1,0 +1,26 @@
+<div class="card fiche annonce alert-dismissible mb-3">
+    <div class="card-header bg-color">Suppression du {{onglet}} N°: {{userprofil.numero}}<a class="btn btn-close  "
+            href="{{path('app_consultant_'~ onglet,{'valider':'nonvalider'})}}"></a>
+    </div>
+
+    <div class="card-body">
+
+
+        <p class="color-alert bg-alert ft-34"><strong>Confirmer la suppression du {{onglet}}:</strong></p>
+
+        <ul class="color-alert bg-alert ft-22">
+            {% if onglet == 'recruteur'%}
+            <li>{{userprofil.etablissement}}; {{userprofil.nom}}</li>
+
+            <li> {{userprofil.codePostal}}, {{userprofil.ville}}</li>
+            {% endif %}
+            {% if onglet == 'candidat'%}
+
+            <li>{{userprofil.nom}}, {{userprofil.prenom}}: {{userprofil.profession.titre}}</li>
+
+            {% endif %}
+        </ul>
+        <a href="{{path('app_consultant_confirmer_supprimer_'~ onglet,{'id':userprofil.idUser.id})}}"
+            class="btn btn-secondary">Suppression</a>
+    </div>
+</div

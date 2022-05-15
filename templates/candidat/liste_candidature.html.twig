@@ -17,13 +17,19 @@
                 </div>
             </div>
 
-            <p class="ft-24">{{emploi.Description}}</p>
+            <p class="ft-24">{{emploi.Description|raw}}</p>
 
             {% if valider[emploi.id] is defined %}
             {% if valider[emploi.id] == true %}
             <p class="ft-26 color-alert">
                 <strong>
                     Votre candidature a été valider par un consultant et trransmis au recruteur.
+                </strong>
+            </p>
+            {% else %}
+            <p class="ft-26 ">
+                <strong>
+                    Votre candidature est en attente de validation par un consulutant.
                 </strong>
             </p>
             {% endif %}

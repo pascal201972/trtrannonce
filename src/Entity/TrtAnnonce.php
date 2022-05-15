@@ -46,6 +46,9 @@ class TrtAnnonce
     #[ORM\Column(type: 'string', length: 50)]
     private $ref;
 
+    #[ORM\Column(type: 'integer')]
+    private $date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -179,6 +182,18 @@ class TrtAnnonce
     public function setRef(string $ref): self
     {
         $this->ref = $ref;
+
+        return $this;
+    }
+
+    public function getDate(): ?int
+    {
+        return $this->date;
+    }
+
+    public function setDate(int $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }

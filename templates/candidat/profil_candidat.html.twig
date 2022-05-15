@@ -2,6 +2,10 @@
 {% form_theme formcv 'bootstrap_5_layout.html.twig' %}
 <div class="container candidat">
     <h3 class="ft-30">Vous êtes: <strong>{{profil.prenom}} {{profil.nom}}</strong></h3>
+
+
+    {% include 'form_user.html.twig' %}
+
     <div class="validation">
         {% if app.user.valider == 0 %}
         <p class="color-alert bg-alert p-2">Alert! Votre candidature est en attente de validation par un

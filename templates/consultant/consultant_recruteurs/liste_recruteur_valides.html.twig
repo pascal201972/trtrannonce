@@ -1,0 +1,32 @@
+<h4 id="idvalid">Recruteurs validés</h4>
+<div class="tbody" id="valid">
+    {% set index = 0 %}
+    {% for recruteur in listes %}
+
+    {% if recruteur.valider == 1 %}
+    {% set index = index + 1 %}
+    <article class="valid  {% if  index % 2 == 0  %} paire {% else %} impaire {% endif %} ">
+        {% include 'consultant/consultant_recruteurs/element_recruteur.html.twig' %}
+        <div class="row">
+            <div class="col-xl-6 action">
+                <a class="voir btn"
+                    href="{{path('app_consultant_voirrecruteur',{'id':recruteur.id,'valider':'valider'})}}">
+                    {% include 'svg/svg_voir.html.twig' %}
+                </a>
+            </div>
+
+            <div class="col-xl-6 action">
+                {% if candidature[recruteur.id] == false %}
+                <a href="{{path('app_consultant_desactivation',{'id':recruteur.id})}}"
+                    class="btn btn-secondary">Supprimer la validation</a>
+
+                {% else %}
+                <em class="color-alert">Ce recruteur a posté une annonce</em>
+                {% endif %}
+                {% include 'svg/svg_valider_check.html.twig' %}
+            </div>
+        </div>
+    </article>
+    {% endif %}
+    {% endfor %}
+</div>

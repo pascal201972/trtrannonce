@@ -43,7 +43,7 @@ class AppFixtures extends Fixture
         $manager->persist($user1);
 
         $user2 = new TrtUser();
-        $user2->setEmail('AdminitrateurTrt@laposte.net');
+        $user2->setEmail('administrateurTrt@laposte.net');
         $user2->setRoles('ROLE_ADMIN');
         $user2->setProfil(0);
         $user2->setValider(1);

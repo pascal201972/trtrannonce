@@ -81,9 +81,12 @@
                 <ul class="liste-candidat">
                     {% for cdts in listeCandidats[ann.id] %}
 
-                    <li>{{ann.id}},{{cdts.nom}},{{cdts.prenom}},{{cdts.profession}},{{cdts.experience}},<strong>CV</strong>
+                    <li>{{cdts.nom}},{{cdts.prenom}},{{cdts.profession}},{{cdts.experience}} <strong>CV</strong>
                         <a href="{{asset('./uploads/cv/'~ cdts.cv)}}" target="_blank" title="voir le cv"> {% include
                             'svg/svg_pdf.html.twig' %}</a>
+                        <a href="{{path('app_recruteur_annonce_candidature_supprimer',{'id':cdts.id})}}"
+                            class="btn btn-primary" title="supprimer candidature">Refuser la candidature</a> (un email
+                        sera envoyé au candidat.)
                     </li>
                     {% endfor %}
                 </ul>

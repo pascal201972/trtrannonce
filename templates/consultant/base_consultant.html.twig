@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultant:trt{% endblock %}
+{% block javascripts %}
+{{ encore_entry_script_tags('js/admin') }}
+{% endblock %}
+
+{% block wrapper %}
+<div class="container-fluid consultant wrapper">
+    <h1 class="bg-color">Bienvenue dans votre espace consultant</h1>
+    <div class="content">
+        {% include 'consultant/menu_consultant.html.twig'%}
+    </div>
+
+
+
+    <div class="content  {% if onglet == 'profil' %} consultant {% else %}  {{onglet}} {% endif %}">
+        {% block contentconsultant %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

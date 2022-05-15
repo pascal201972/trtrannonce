@@ -1,0 +1,32 @@
+</br>
+{% if userprofil != null %}
+<div class="card fiche {{profil}} alert-dismissible mb-3">
+    <div class="card-header bg-color">Recruteur N° : {{userprofil.numero}}<a class="btn btn-close  "
+            href="{{path('app_consultant_recruteur',{'valider':valider})}}"></a>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <p><strong>Etablisement:</strong> {{userprofil.etablissement}}</p>
+                <p><strong>Nom:</strong> {{userprofil.nom}}</p>
+                <p><strong>Email:</strong> {{userprofil.idUser.email}}</p>
+
+
+                </p>
+            </div>
+            <div class="col-12 col-lg-6">
+                <p><strong>Adresse:</strong> {{userprofil.adresse}}</p>
+                <p><strong>Code postal:</strong> {{userprofil.codePostal}}</p>
+                <p><strong>Ville:</strong> {{userprofil.ville}}</p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+</br>
+{% endif %}

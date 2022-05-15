@@ -19,7 +19,8 @@ class HomeController extends BddController
 
         return $this->render('home/home.html.twig', [
             'page' => 'home',
-            'profession' => $profession
+            'profession' => $profession,
+
         ]);
     }
 }

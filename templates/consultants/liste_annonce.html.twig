@@ -8,6 +8,10 @@
         </li>
     </ul>
     {% set ficheliste = true %}
+
+    {% if suppression == true %}
+    {% include 'consultant/supprimer_annonce.html.twig' %}
+    {% endif %}
     {% include 'consultant/annonces_non_validees.html.twig'%}
     {% include 'consultant/annonces_validees.html.twig' %}
 </div>

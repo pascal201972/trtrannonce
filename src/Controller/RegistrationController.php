@@ -41,14 +41,17 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $time = 1651298249;
             if ($type == 'recruteur') {
                 $user->setRoles('ROLE_RECRUTEUR');
                 $profil = new TrtProfilrecruteur();
+                $numero = 'rec' . (time() - $time);
             } else {
                 $user->setRoles('ROLE_CANDIDAT');
                 $profil = new TrtProfilcandidat();
+                $numero = 'cdt' . (time() - $time);
             }
-            $profil->setNumero(uniqid());
+            $profil->setNumero($numero);
             $user->setValider(0);
             $user->setProfil(0);
             $entityManager->persist($user);

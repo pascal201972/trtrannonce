@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\MdpFormType;
 use App\Entity\TrtAnnonce;
 use App\Form\FormAnnonceType;
+use App\Services\EnvoieEmail;
 use App\Form\ResetPassEmailType;
 use App\Controller\BddController;
 use App\Entity\TrtProfilrecruteur;
@@ -18,12 +19,14 @@ class RecruteurController extends BddController
 {
     /**
      * 
-     * @Route("/recruteur", name="app_recruteur")
+     * @Route("/recruteur", name="app_recruteur")  
+     * @Route("/recruteur/compte/supprimer/{action}", name="app_recruteur_compte_supprimer")
+     * @Route("/recruteur/compte/supprimer/confirmer/{action}", name="app_recruteur_compte_supprimer_confirmer")
      * IsGranted("ROLE_RECRUTEUR")
      * @return Response
      */
 
-    public function index(Request $request): Response
+    public function index(Request $request, $action = null): Response
     {
         $route = "app_recruteur";
         $user = $this->getUser();
@@ -46,14 +49,39 @@ class RecruteurController extends BddController
         $formeProfilRecruteur = $this->createForm(FormProfilRecruteurType::class, $profilRecruteur);
         $formeProfilRecruteur->handleRequest($request);
         $complet = $this->isProfilComplet($user);
+        $suppression = false;
 
+        if ($action == 'supprimer') {
+            $suppression = true;
+        }
+        if ($action == 'confirmer') {
+
+
+            $annonces = $this->reposAnnonce->findBy(['recruteur' =>  $profilRecruteur]);
+            if ($annonces) {
+                foreach ($annonces as $ann) {
+                    $candidatures = $this->reposCandidature->findBy(['annonce' => $ann->getId()]);
+                    if ($candidatures) {
+                        foreach ($candidatures as $cdt) {
+                            $this->entityManager->remove($cdt);
+                        }
+                    }
+                    $this->entityManager->remove($ann);
+                }
+            }
+            $this->entityManager->remove($profilRecruteur);
+            $this->entityManager->remove($user);
+            $this->entityManager->flush();
+            return $this->redirectToRoute('app_home');
+        }
         $parametres = [
             'page' => 'administration',
             'onglet' => 'profil',
             'formemail' => $formemail->createView(),
             'formMdp' => $formMdp->createView(),
             'formProfilRecruteur' => $formeProfilRecruteur->createView(),
-            'complet' => $complet
+            'complet' => $complet,
+            'suppression' => $suppression
         ];
         if ($formeProfilRecruteur->isSubmitted() && $formeProfilRecruteur->isValid()) {
             $user->setProfil($complet);
@@ -71,6 +99,8 @@ class RecruteurController extends BddController
 
         );
     }
+
+
 
     /**
      * 
@@ -122,6 +152,13 @@ class RecruteurController extends BddController
      */
     public function confirmerSuppressionAnnonce($id, Request $request)
     {
+        $candidatures = $this->reposCandidature->findBy(['annonce' => $id]);
+        if ($candidatures != null) {
+            foreach ($candidatures as $cdt) {
+                $this->entityManager->remove($cdt);
+                $this->entityManager->flush();
+            }
+        }
         $annonce = $this->reposAnnonce->findOneBy(['id' => $id]);
         $this->entityManager->remove($annonce);
         $this->entityManager->flush();
@@ -187,17 +224,47 @@ class RecruteurController extends BddController
         );
     }
 
+    /**
+     * 
+     * @Route("/recruteur/annonce/supprimer/candidature/{id}", name="app_recruteur_annonce_candidature_supprimer")
+     * IsGranted("ROLE_RECRUTEUR")
+     * @return Response
+     */
+    public function supprimer_candidature($id, EnvoieEmail $envoieEmail)
+    {
+        if ($id != null) {
+            $cdt = $this->reposCandidature->findOneBy(['id' => $id]);
+            $userprofil = $this->reposProfilCdt->findOneBy(['id' =>  $cdt->getProfil()]);
+            $annonce = $this->reposAnnonce->findOneBy(['id' =>  $cdt->getAnnonce()]);
+            $user = $this->reposUser->findOneBy(['id' =>   $userprofil->getIdUser()]);
+            if ($cdt) {
+                $this->entityManager->remove($cdt);
+                $this->entityManager->flush();
+                $subject = "Votre candidature";
+                $template = 'templateEmail/email_candidature_refuse.html.twig';
 
+                $email =  $user->getEmail();
+                $context = [
+                    'annonce' => $annonce->getRef(),
+                    'profession' => $annonce->getProfession()->getTitre(),
+
+                ];
+                $envoieEmail->SendEmail($email, $subject, $template, $context);
+            }
+            return $this->redirectToRoute('app_recruteur_annonce');
+        }
+    }
 
 
     public function setAction($action, $annonce, $profil)
     {
         if ($action == 'ajouter') {
-            $ref = 'ann' . time();
+            $time = 1651298249;
+            $ref = 'ann' . (time() - $time);
             $annonce->setRef($ref);
+            $annonce->setDate(time());
             $annonce->setValider(0);
             $profil->addAnnonce($annonce);
-            $annonce->setValider(0);
         }
         $annonce->setRecruteur($profil);
 
@@ -257,6 +324,7 @@ class RecruteurController extends BddController
             case 'ajouter':
 
                 if ($formAnnonce->isSubmitted() && $formAnnonce->isValid()) {
+
                     $this->setAction($action, $annonce, $profilRecruteur);
                     $route['soumis'] = true;
                 }
@@ -265,6 +333,7 @@ class RecruteurController extends BddController
             case 'modifier':
 
                 if ($formAnnonce->isSubmitted() && $formAnnonce->isValid()) {
+
                     $this->setAction($action, $annonce, $profilRecruteur);
                     $route['soumis'] = true;
                 }
@@ -272,10 +341,12 @@ class RecruteurController extends BddController
                 $this->setAction($action, $annonce, $profilRecruteur);
                 break;
             case 'supprimer':
+
+
             case 'voir':
 
                 $parametres['annonce'] = $annonce;
-                $this->setAction($action, $annonce, $profilRecruteur);
+                // $this->setAction($action, $annonce, $profilRecruteur);
                 break;
         }
 

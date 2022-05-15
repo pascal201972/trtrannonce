@@ -1,0 +1,41 @@
+<h1>Votre candidature</h1>
+<table cellpadding="0" cellspacing="0" border="0" width="640" align="center"
+    style="margin:auto;clear:both;width:640px;background-color:#eee;">
+    <thead>
+        <tr>
+
+            <td style="height:80px;font-size:20px;padding:10px;color:#fff;background-color:#025159;text-align:center">
+                {% include 'templateEmail/email_logo.html.twig' %}
+                <span style="color:#fff;display:inline-block;padding-bottom:15px;">TRT recrutement</span>
+            </td>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr>
+            <td style="height:20px;font-size:16px;padding:5px;">
+                Bonjour,
+                <p>Nous avons le regret de vous informer que votre candidature concernant l'annonce:</p>
+
+                <ul>
+                    <li>reférence:{{annonce}}.</li>
+                    <li> poste: {{profession}}.</li>
+                </ul>
+                <p>n'a pas été retenue malgré l’intérêt que suscite votre candidature.</p>
+
+            </td>
+        </tr>
+        <tr>
+            <td style="height:20px;font-size:16px;padding:5px;">
+                <p>Nous nous permettons toutefois, sauf avis contraire de votre part, de conserver votre curriculum
+                    vitae, afin de pouvoir vous contacter si un poste susceptible de vous intéresser venait à se
+                    présenter.</p>
+                <p>Nous vous souhaitons une pleine réussite dans votre recherche. Nous vous prions d’agréer,
+                    l’expression de nos sentiments respectueux.
+
+                </p>
+            </td>
+        </tr>
+
+    </tbody>
+</table>

@@ -8,6 +8,10 @@
     <h1>Les emplois disponibles</h1>
     {% for emploi in liste %}
     <article class="emploi annonce">
+        <p class="info">
+            <span><strong>Publier le : </strong> {{emploi.date|date("d/m/Y")}}</span>
+            <span><strong>ref: </strong> {{emploi.ref}} </span>
+        </p>
         <div class="row">
             <div class="col-12 col-lg-4">
                 <h2><strong>{{emploi.Recruteur.Etablissement}} : </strong>{{emploi.Recruteur.Ville}}</h2>
@@ -21,7 +25,7 @@
             </div>
         </div>
         <p class="ft-20">{{emploi.Experience.titre}}</p>
-        <p class="ft-24">{{emploi.Description}}</p>
+        <p class="ft-24">{{emploi.Description|raw}}</p>
         <p class="bouton"><a href="{{path('app_candidat_annonce_postuler',{'id':emploi.id})}}"
                 class="btn btn-annonce ft-22">Postuler</a></p>
     </article>

@@ -1,47 +1,7 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Consultant:trt{% endblock %}
-{% block javascripts %}
-{{ encore_entry_script_tags('js/admin') }}
-{% endblock %}
-
-{% block wrapper %}
-
-<div class="container-fluid consultant wrapper">
-    <h1 class="bg-color">Bienvenue dans votre espace consultant</h1>
-    {% if onglet == 'candidat' and fiche == true %} {% include 'consultant/fiche_candidat.html.twig'%}{% endif %}
-    {% if onglet == 'recruteur' and fiche == true %} {% include 'consultant/fiche_recruteur.html.twig'%}{% endif %}
-    {% if onglet == 'annonce' and fiche == true %}
-    {% set ficheliste = false %}
-    {% include 'consultant/fiche_annonce.html.twig'%}{% endif %}
-    <ul class="nav nav-tabs">
-        <li class="nav-item consultant ">
-            <a class="nav-link {% if onglet == 'profil' %} active {% endif %}"
-                href="{{path('app_consultant')}}">Profil</a>
-        </li>
-        <li class="nav-item candidat ">
-            <a class="nav-link {% if onglet == 'candidat' %} active {% endif %}"
-                href="{{path('app_consultant_candidat')}}">Candidats</a>
-        </li>
-        <li class="nav-item recruteur">
-            <a class="nav-link {% if onglet == 'recruteur' %} active {% endif %} "
-                href="{{path('app_consultant_recruteur')}}">Recruteurs</a>
-        </li>
-        <li class="nav-item annonce">
-            <a class="nav-link {% if onglet == 'annonce' %} active {% endif %} "
-                href="{{path('app_consultant_annonce')}}">Annonces</a>
-        </li>
-
-
-
-    </ul>
-    <div class="content  {% if onglet == 'profil' %} consultant {% else %}  {{onglet}} {% endif %}">
-        {% if onglet == 'profil' %} {% include 'consultant/profil_consultant.html.twig'%}{% endif %}
-        {% if onglet == 'candidat' %} {% include 'consultant/liste_candidat.html.twig'%}{% endif %}
-        {% if onglet == 'recruteur' %} {% include 'consultant/liste_recruteur.html.twig'%}{% endif %}
-        {% if onglet == 'annonce' %} {% include 'consultant/liste_annonce.html.twig'%}{% endif %}
-
-
-    </div>
+{% extends 'consultant/base_consultant.html.twig' %}
+{% block contentconsultant %}
+<br />
+<div class="container">
+    {% include 'form_user.html.twig' %}
 </div>
 {% endblock %}
